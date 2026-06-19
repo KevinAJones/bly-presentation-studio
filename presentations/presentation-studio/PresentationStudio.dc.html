@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Presentation Studio" description="Start here — agents pick a presentation (Buyer / Pre-Listing / Listing / Re-Listing), choose a color scheme, fill in client, agent, property, price & comps, then open the branded deck to present or export to PDF." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  input::placeholder{ color:#9fb0c4; }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:radial-gradient(circle at 18% 6%, #d9dde2, transparent 52%), linear-gradient(160deg,#d2d6dc,#c5cad1); padding:56px 24px 160px; font-family:var(--f-body); color:var(--ink);">
+  <div style="max-width:1060px; margin:0 auto;">
+
+    <!-- header -->
+    <div style="display:flex; align-items:center; gap:18px; margin-bottom:30px;">
+      <img src="../../assets/bly-logo-navy.png" alt="The Bly Team" style="height:48px;">
+      <div style="width:1px; height:38px; background:var(--line-strong);"></div>
+      <div style="font-family:var(--f-body); font-weight:700; font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--royal);">Presentation Studio</div>
+    </div>
+    <h1 style="font-family:var(--f-display); font-weight:700; text-transform:uppercase; font-size:48px; line-height:1.04; letter-spacing:.005em; margin:0 0 12px; color:var(--ink);">Build a client <em style="font-family:var(--f-serif); font-style:italic; text-transform:none; color:var(--royal-bright); font-weight:600;">presentation</em></h1>
+    <p style="font-size:18px; line-height:1.6; color:var(--ink-soft); font-weight:500; max-width:64ch; margin:0 0 36px;">Pick a presentation, choose a look, drop in your details — then open it to present live or save as a PDF. Everything stays in The Bly Team brand.</p>
+
+    <!-- STEP 1 · PRESENTATION -->
+    <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:22px;"><span style="width:20px; height:2px; background:var(--gold);"></span><b style="color:var(--royal); font-weight:700;">1</b> &nbsp;Choose a presentation</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <sc-for list="{{ types }}" as="t" hint-placeholder-count="4">
+          <button type="button" data-id="{{ t.id }}" onClick="{{ onType }}" style="position:relative; text-align:left; cursor:pointer; border-radius:16px; padding:22px 24px; background:#fff; font-family:var(--f-body); display:block; width:100%; border:2px solid var(--line);">
+            <sc-if value="{{ t.sel }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; inset:-2px; border:2px solid var(--royal); border-radius:16px; box-shadow:0 16px 34px -20px rgba(11,39,71,.55); pointer-events:none;"></span></sc-if>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; position:relative;">
+              <span style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:24px; letter-spacing:.01em; color:var(--ink);">{{ t.name }}</span>
+              <sc-if value="{{ t.sel }}" hint-placeholder-val="{{ true }}"><span style="width:26px; height:26px; border-radius:50%; background:var(--royal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px;">✓</span></sc-if>
+            </div>
+            <div style="font-size:15px; line-height:1.5; color:var(--ink-soft); margin-top:8px; position:relative;">{{ t.desc }}</div>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:10px;"><span style="width:20px; height:2px; background:var(--gold);"></span>Import data <span style="color:var(--ink-faint); font-weight:600; letter-spacing:.04em;">— optional</span></div>
+      <p style="font-size:16px; line-height:1.55; color:var(--ink-soft); font-weight:500; margin:0 0 22px; max-width:70ch;">Upload what you already have and we’ll auto-fill the intake form below — then review &amp; adjust anything before you open the deck.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column;">
+          <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:19px; color:var(--ink);">Agent headshot</div>
+          <div style="font-size:14px; line-height:1.5; color:var(--ink-soft); margin:8px 0 18px;">A photo of you for the “Meet the team” slide — JPG or PNG.</div>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:auto;">
+            <sc-if value="{{ hasPhoto }}" hint-placeholder-val=""><img src="{{ agentPhoto }}" alt="" style="width:52px; height:52px; border-radius:50%; object-fit:cover; border:1px solid var(--line-strong);"></sc-if>
+            <label style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:14px; color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright)); padding:11px 22px; border-radius:10px;" style-hover="filter:brightness(1.07);">Upload photo<input type="file" accept="image/*" onChange="{{ onHeadshot }}" style="display:none;"></label>
+          </div>
+          <sc-if value="{{ headshotStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:14px;">{{ headshotStatus }}</div></sc-if>
+        </div>
+        <sc-if value="{{ showProperty }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column;">
+          <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:19px; color:var(--ink);">Property &amp; owner record</div>
+          <div style="font-size:14px; line-height:1.5; color:var(--ink-soft); margin:8px 0 18px;">Realist / County property report — fills owner name, subject address &amp; estimated value.</div>
+          <label style="margin-top:auto; align-self:flex-start; cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:14px; color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright)); padding:11px 22px; border-radius:10px;" style-hover="filter:brightness(1.07);">Upload PDF<input type="file" accept="application/pdf,.pdf" onChange="{{ onRealist }}" style="display:none;"></label>
+          <sc-if value="{{ realistStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:14px;">{{ realistStatus }}</div></sc-if>
+        </div>
+        <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column;">
+          <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:19px; color:var(--ink);">CMA — comparable sales</div>
+          <div style="font-size:14px; line-height:1.5; color:var(--ink-soft); margin:8px 0 18px;">Cloud CMA, Quick CMA or HAR report — fills the comparable-sales table.</div>
+          <label style="margin-top:auto; align-self:flex-start; cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:14px; color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright)); padding:11px 22px; border-radius:10px;" style-hover="filter:brightness(1.07);">Upload PDF<input type="file" accept="application/pdf,.pdf" onChange="{{ onCMA }}" style="display:none;"></label>
+          <sc-if value="{{ cmaStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:14px;">{{ cmaStatus }}</div></sc-if>
+        </div>
+        </sc-if>
+      </div>
+      <div style="font-size:13.5px; color:var(--ink-faint); margin-top:18px; line-height:1.5;">Old listing / MLS records and other formats — share examples and we’ll add them. Everything imported stays fully editable below.</div>
+    </section>
+
+    <!-- STEP 2 · LOOK -->
+    <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:22px;"><span style="width:20px; height:2px; background:var(--gold);"></span><b style="color:var(--royal); font-weight:700;">2</b> &nbsp;Choose a look</div>
+      <div style="display:flex; gap:16px;">
+        <button type="button" data-id="navy" onClick="{{ onScheme }}" style="position:relative; cursor:pointer; border-radius:14px; padding:18px 20px; background:#fff; font-family:var(--f-body); text-align:left; flex:1; border:2px solid var(--line);">
+          <sc-if value="{{ schemeNavySel }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; inset:-2px; border:2px solid var(--royal); border-radius:14px; box-shadow:0 14px 30px -20px rgba(11,39,71,.5); pointer-events:none;"></span></sc-if>
+          <div style="display:flex; gap:7px; margin-bottom:14px; position:relative;">
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#0b2747;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#1f60aa;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#c79a3e;"></span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; position:relative;">
+            <span style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:20px; color:var(--ink);">Navy</span>
+            <sc-if value="{{ schemeNavySel }}" hint-placeholder-val="{{ true }}"><span style="width:22px; height:22px; border-radius:50%; background:var(--royal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px;">✓</span></sc-if>
+          </div>
+          <div style="font-size:14px; color:var(--ink-soft); margin-top:5px; position:relative;">Confident · classic</div>
+        </button>
+        <button type="button" data-id="editorial" onClick="{{ onScheme }}" style="position:relative; cursor:pointer; border-radius:14px; padding:18px 20px; background:#fff; font-family:var(--f-body); text-align:left; flex:1; border:2px solid var(--line);">
+          <sc-if value="{{ schemeEditorialSel }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; inset:-2px; border:2px solid var(--royal); border-radius:14px; box-shadow:0 14px 30px -20px rgba(11,39,71,.5); pointer-events:none;"></span></sc-if>
+          <div style="display:flex; gap:7px; margin-bottom:14px; position:relative;">
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#f4f7fb;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#1f60aa;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#a8812f;"></span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; position:relative;">
+            <span style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:20px; color:var(--ink);">Editorial</span>
+            <sc-if value="{{ schemeEditorialSel }}" hint-placeholder-val="{{ true }}"><span style="width:22px; height:22px; border-radius:50%; background:var(--royal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px;">✓</span></sc-if>
+          </div>
+          <div style="font-size:14px; color:var(--ink-soft); margin-top:5px; position:relative;">Light · clean</div>
+        </button>
+        <button type="button" data-id="luxury" onClick="{{ onScheme }}" style="position:relative; cursor:pointer; border-radius:14px; padding:18px 20px; background:#fff; font-family:var(--f-body); text-align:left; flex:1; border:2px solid var(--line);">
+          <sc-if value="{{ schemeLuxurySel }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; inset:-2px; border:2px solid var(--royal); border-radius:14px; box-shadow:0 14px 30px -20px rgba(11,39,71,.5); pointer-events:none;"></span></sc-if>
+          <div style="display:flex; gap:7px; margin-bottom:14px; position:relative;">
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#06122a;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#a8812f;"></span>
+            <span style="width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,39,71,.12); background:#f7f4ee;"></span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; position:relative;">
+            <span style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:20px; color:var(--ink);">Luxury</span>
+            <sc-if value="{{ schemeLuxurySel }}" hint-placeholder-val="{{ true }}"><span style="width:22px; height:22px; border-radius:50%; background:var(--royal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px;">✓</span></sc-if>
+          </div>
+          <div style="font-size:14px; color:var(--ink-soft); margin-top:5px; position:relative;">Serif · gold · midnight</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 3 · DETAILS -->
+    <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:24px;"><span style="width:20px; height:2px; background:var(--gold);"></span><b style="color:var(--royal); font-weight:700;">3</b> &nbsp;Your details</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px 24px;">
+        <div>
+          <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Prepared for</label>
+          <input data-k="clientName" value="{{ clientName }}" onInput="{{ onField }}" placeholder="Client name" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+        </div>
+        <div>
+          <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Date</label>
+          <input data-k="presentedDate" value="{{ presentedDate }}" onInput="{{ onField }}" placeholder="June 2026" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+        </div>
+        <div>
+          <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Agent name</label>
+          <input data-k="agentName" value="{{ agentName }}" onInput="{{ onField }}" placeholder="Deborah Bly" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <div>
+            <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Phone</label>
+            <input data-k="agentPhone" value="{{ agentPhone }}" onInput="{{ onField }}" placeholder="(832) 932-5435" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+          </div>
+          <div>
+            <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Email</label>
+            <input data-k="agentEmail" value="{{ agentEmail }}" onInput="{{ onField }}" placeholder="clientcare@agentbly.com" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
+        <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Agent bio <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, shows on “Meet the team”</span></label>
+        <textarea data-k="agentBio" value="{{ agentBio }}" onInput="{{ onField }}" rows="3" placeholder="A short bio in your voice — experience, local roots, how you serve clients." style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; line-height:1.5; color:var(--ink); background:#fff; outline:none; resize:vertical; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);"></textarea>
+      </div>
+
+      <sc-if value="{{ showProperty }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line); display:grid; grid-template-columns:2fr 1fr 1fr; gap:20px 24px;">
+          <div>
+            <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Property address</label>
+            <input data-k="propertyAddress" value="{{ propertyAddress }}" onInput="{{ onField }}" placeholder="123 Main St, League City, TX" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+          </div>
+          <div>
+            <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">List range — low</label>
+            <input data-k="recommendedLow" value="{{ recommendedLow }}" onInput="{{ onField }}" placeholder="$435,000" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+          </div>
+          <div>
+            <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">List range — high</label>
+            <input data-k="recommendedHigh" value="{{ recommendedHigh }}" onInput="{{ onField }}" placeholder="$449,000" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- COMPS (listing / re-listing) -->
+    <sc-if value="{{ showComps }}" hint-placeholder-val="{{ true }}">
+      <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px;">
+          <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px;"><span style="width:20px; height:2px; background:var(--gold);"></span>Comparable sales</div>
+          <label style="display:flex; align-items:center; gap:9px; cursor:pointer; font-size:14.5px; font-weight:600; color:var(--ink-soft);">
+            <input type="checkbox" checked="{{ skipComps }}" onChange="{{ toggleSkip }}" style="width:18px; height:18px; accent-color:var(--royal); cursor:pointer;">
+            Present comps live (skip)
+          </label>
+        </div>
+
+        <sc-if value="{{ showTable }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:2.4fr 1fr 1fr .9fr .8fr 44px; gap:8px; padding:0 4px 8px; font-weight:700; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);">
+          <div>Address</div><div style="text-align:right;">Sold</div><div style="text-align:right;">Sq Ft</div><div style="text-align:right;">$/SF</div><div style="text-align:right;">DOM</div><div></div>
+        </div>
+        <sc-for list="{{ comps }}" as="c" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:2.4fr 1fr 1fr .9fr .8fr 44px; gap:8px; margin-bottom:8px; align-items:center;">
+            <input data-i="{{ $index }}" data-k="address" value="{{ c.address }}" onInput="{{ onComp }}" placeholder="Address" style="width:100%; padding:11px 13px; border:1.5px solid var(--field-line); border-radius:9px; font-size:15px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+            <input data-i="{{ $index }}" data-k="sold" value="{{ c.sold }}" onInput="{{ onComp }}" placeholder="$418K" style="width:100%; padding:11px 13px; border:1.5px solid var(--field-line); border-radius:9px; font-size:15px; color:var(--ink); background:#fff; outline:none; text-align:right;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+            <input data-i="{{ $index }}" data-k="sqft" value="{{ c.sqft }}" onInput="{{ onComp }}" placeholder="2,620" style="width:100%; padding:11px 13px; border:1.5px solid var(--field-line); border-radius:9px; font-size:15px; color:var(--ink); background:#fff; outline:none; text-align:right;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+            <input data-i="{{ $index }}" data-k="psf" value="{{ c.psf }}" onInput="{{ onComp }}" placeholder="$160" style="width:100%; padding:11px 13px; border:1.5px solid var(--field-line); border-radius:9px; font-size:15px; color:var(--ink); background:#fff; outline:none; text-align:right;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+            <input data-i="{{ $index }}" data-k="dom" value="{{ c.dom }}" onInput="{{ onComp }}" placeholder="14" style="width:100%; padding:11px 13px; border:1.5px solid var(--field-line); border-radius:9px; font-size:15px; color:var(--ink); background:#fff; outline:none; text-align:right;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+            <button type="button" data-i="{{ $index }}" onClick="{{ removeComp }}" title="Remove" style="width:38px; height:38px; border:1.5px solid var(--line-strong); background:#fff; border-radius:9px; color:var(--ink-faint); font-size:18px; cursor:pointer;" style-hover="border-color:var(--red); color:var(--red);">×</button>
+          </div>
+        </sc-for>
+        <button type="button" onClick="{{ addComp }}" style="margin-top:8px; border:1.5px dashed var(--line-strong); background:transparent; color:var(--ink-soft); font-family:var(--f-body); font-weight:700; font-size:14px; padding:12px 22px; border-radius:10px; cursor:pointer;" style-hover="border-color:var(--royal); color:var(--royal);">+ Add comp</button>
+        </sc-if>
+        <sc-if value="{{ skipComps }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--panel-2); border:1px dashed var(--line-strong); border-radius:14px; padding:26px 28px; display:flex; align-items:center; gap:18px;">
+            <span style="font-family:var(--f-display); font-weight:700; font-size:30px; color:var(--gold-deep);">→</span>
+            <div>
+              <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:18px; color:var(--ink);">Comps presented live</div>
+              <div style="font-size:14.5px; color:var(--ink-soft); margin-top:4px;">The pricing slide shows your recommended range with a “presented live” note instead of a table — great for in-person walkthroughs.</div>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+  </div>
+
+  <!-- LAUNCH BAR -->
+  <div style="position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.92); backdrop-filter:blur(10px); border-top:1px solid var(--line); padding:18px 24px; display:flex; justify-content:center; z-index:50;">
+    <div style="max-width:1060px; width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+      <span style="font-size:14.5px; color:var(--ink-soft); font-weight:500;">Opens the branded deck with your details — present with arrow keys, or export a PDF from the deck.</span>
+      <button type="button" onClick="{{ open }}" style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; letter-spacing:.04em; font-size:19px; color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright)); border:none; border-radius:12px; padding:16px 34px; cursor:pointer; white-space:nowrap; box-shadow:0 16px 30px -16px rgba(31,96,170,.8);" style-hover="filter:brightness(1.07);">Open {{ typeName }} presentation →</button>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(...a) {
+    super(...a);
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem('blyPresentation') || '{}'); } catch (e) { saved = {}; }
+    const defComps = [
+      { address: '1204 Lighthouse Dr', sold: '$418K', sqft: '2,620', psf: '$160', dom: '14' },
+      { address: '2847 Harbor View Ln', sold: '$432K', sqft: '2,847', psf: '$152', dom: '9' },
+      { address: '3391 Bay Meadow Ct', sold: '$449K', sqft: '3,105', psf: '$145', dom: '5' },
+      { address: '915 Tuscan Lakes Blvd', sold: '$441K', sqft: '2,910', psf: '$152', dom: '11' }
+    ];
+    this.state = {
+      type: saved.type || 'listing',
+      scheme: saved.scheme || 'navy',
+      clientName: saved.clientName || '',
+      agentName: saved.agentName || 'Deborah Bly',
+      agentPhone: saved.agentPhone || '(832) 932-5435',
+      agentEmail: saved.agentEmail || 'clientcare@agentbly.com',
+      agentBio: saved.agentBio || '',
+      agentPhoto: saved.agentPhoto || '',
+      headshotStatus: '',
+      agentInfoStatus: '',
+      presentedDate: saved.presentedDate || 'June 2026',
+      propertyAddress: saved.propertyAddress || '2847 Harbor View Ln, League City, TX',
+      recommendedLow: saved.recommendedLow || '$435,000',
+      recommendedHigh: saved.recommendedHigh || '$449,000',
+      comps: (Array.isArray(saved.comps) && saved.comps.length) ? saved.comps : defComps,
+      skipComps: !!saved.skipComps,
+      cmaStatus: '',
+      realistStatus: ''
+    };
+    this.onType = (e) => this.setState({ type: e.currentTarget.dataset.id });
+    this.onScheme = (e) => this.setState({ scheme: e.currentTarget.dataset.id });
+    this.onField = (e) => this.setState({ [e.target.dataset.k]: e.target.value });
+    this.onComp = (e) => {
+      const i = +e.target.dataset.i, k = e.target.dataset.k, v = e.target.value;
+      this.setState({ comps: this.state.comps.map((c, idx) => idx === i ? Object.assign({}, c, { [k]: v }) : c) });
+    };
+    this.addComp = () => this.setState({ comps: this.state.comps.concat([{ address: '', sold: '', sqft: '', psf: '', dom: '' }]) });
+    this.removeComp = (e) => {
+      const i = +e.currentTarget.dataset.i;
+      this.setState({ comps: this.state.comps.filter((_, idx) => idx !== i) });
+    };
+    this.toggleSkip = () => this.setState({ skipComps: !this.state.skipComps });
+    this.onCMA = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      this.setState({ cmaStatus: 'Reading ' + file.name + ' …' });
+      try {
+        const mod = await import('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf-parse.es.js');
+        mod.PDFParse.setWorker('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf.worker.min.mjs');
+        const parser = new mod.PDFParse({ data: new Uint8Array(await file.arrayBuffer()) });
+        const res = await parser.getText();
+        const found = this._parseCMA(res.text || '');
+        if (found.length) {
+          this.setState({ comps: found, skipComps: false, cmaStatus: '✓ Imported ' + found.length + ' comps from ' + file.name + '. Review & edit below.' });
+        } else {
+          this.setState({ cmaStatus: 'Couldn’t read comps from ' + file.name + ' automatically (it may be image-only). Enter them below, or present live.' });
+        }
+      } catch (err) {
+        this.setState({ cmaStatus: 'Could not read that file. Enter comps below, or present comps live.' });
+      }
+    };
+    this.onRealist = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      this.setState({ realistStatus: 'Reading ' + file.name + ' …' });
+      try {
+        const mod = await import('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf-parse.es.js');
+        mod.PDFParse.setWorker('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf.worker.min.mjs');
+        const parser = new mod.PDFParse({ data: new Uint8Array(await file.arrayBuffer()) });
+        const d = this._parseRealist(((await parser.getText()).text) || '');
+        const next = {}; const filled = [];
+        if (d.client) { next.clientName = d.client; filled.push('owner'); }
+        if (d.address) { next.propertyAddress = d.address; filled.push('address'); }
+        if (d.low && d.high) { next.recommendedLow = d.low; next.recommendedHigh = d.high; filled.push('estimated value'); }
+        if (filled.length) { next.realistStatus = '✓ Filled ' + filled.join(', ') + ' from ' + file.name + '. Review & edit below.'; this.setState(next); }
+        else { this.setState({ realistStatus: 'Couldn’t read that report automatically — enter details below.' }); }
+      } catch (err) {
+        this.setState({ realistStatus: 'Could not read that file. Enter details below.' });
+      }
+    };
+    this.onHeadshot = (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      this.setState({ headshotStatus: 'Loading…' });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const max = 720; let w = img.width, h = img.height;
+          if (w > h && w > max) { h = Math.round(h * max / w); w = max; }
+          else if (h >= w && h > max) { w = Math.round(w * max / h); h = max; }
+          const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+          cv.getContext('2d').drawImage(img, 0, 0, w, h);
+          this.setState({ agentPhoto: cv.toDataURL('image/jpeg', 0.85), headshotStatus: '✓ Headshot added.' });
+        };
+        img.onerror = () => this.setState({ headshotStatus: 'Could not read that image.' });
+        img.src = reader.result;
+      };
+      reader.onerror = () => this.setState({ headshotStatus: 'Could not read that image.' });
+      reader.readAsDataURL(file);
+    };
+    this.onAgentInfo = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const get = (re) => { const m = text.match(re); return m ? m[1].trim() : ''; };
+        const fn = get(/\nFN[^:\n]*:(.+)/i);
+        const tel = get(/\nTEL[^:\n]*:(.+)/i);
+        const email = get(/\nEMAIL[^:\n]*:(.+)/i);
+        const next = {}; const filled = [];
+        if (fn) { next.agentName = fn; filled.push('name'); }
+        if (tel) { next.agentPhone = tel.replace(/[^0-9+()\-. ]/g, '').trim(); filled.push('phone'); }
+        if (email) { next.agentEmail = email; filled.push('email'); }
+        if (filled.length) { next.agentInfoStatus = '✓ Filled ' + filled.join(', ') + '.'; this.setState(next); }
+        else this.setState({ agentInfoStatus: 'No contact fields found in that file.' });
+      } catch (err) { this.setState({ agentInfoStatus: 'Could not read that file.' }); }
+    };
+    this.open = () => {
+      try { localStorage.setItem('blyPresentation', JSON.stringify(this.state)); } catch (e) {}
+      const paths = {
+        buyer: '../buyer-presentation/BuyerPresentation.dc.html',
+        prelisting: '../pre-listing-presentation/PreListingPresentation.dc.html',
+        listing: '../listing-presentation/ListingPresentation.dc.html',
+        relisting: '../relisting-presentation/ReListingPresentation.dc.html'
+      };
+      window.location.href = paths[this.state.type] || paths.listing;
+    };
+  }
+  _fmtName(raw) {
+    const tk = String(raw).trim().split(/\s+/).filter(Boolean);
+    if (tk.length < 2) return { first: tk[0] || '', last: '' };
+    return { first: tk[1], last: tk[0] };
+  }
+  _parseRealist(text) {
+    const t = String(text); const out = {};
+    const am = t.match(/(\d+[^\n,]*,\s*[A-Za-z .'\-]+,\s*[A-Z]{2})\s+(\d{5})/);
+    if (am) out.address = (am[1] + ' ' + am[2]).replace(/\s+/g, ' ').trim();
+    const o1 = t.match(/Owner Name(?:\s|\t)+([A-Za-z'\-]+(?:\s+[A-Za-z'\-]+){1,3}?)(?:\s|\t)+Tax Billing/);
+    const o2 = t.match(/Owner Name 2(?:\s|\t)+([A-Za-z'\-]+(?:\s+[A-Za-z'\-]+){1,3}?)(?:\s|\t)+Tax Billing/);
+    if (o1) {
+      const n1 = this._fmtName(o1[1]);
+      if (o2) {
+        const n2 = this._fmtName(o2[1]);
+        if (n1.last && n1.last === n2.last) out.client = n1.first + ' & ' + n2.first + ' ' + n1.last;
+        else out.client = (n1.first + ' ' + n1.last).trim() + ' & ' + (n2.first + ' ' + n2.last).trim();
+      } else { out.client = (n1.first + ' ' + n1.last).trim(); }
+    }
+    const rm = t.match(/Range\s*(?:\t|\s)*\$([\d,]+)\s*-\s*\$([\d,]+)/);
+    if (rm) { out.low = '$' + rm[1]; out.high = '$' + rm[2]; }
+    return out;
+  }
+  _parseCMA(text) {
+    const lines = String(text).split('\n');
+    const blocks = [];
+    let cur = null;
+    const isRow = (ln) => /^\s*\d{1,2}\s+\d{7,8}\s/.test(ln);
+    const isStop = (ln) => /^\s*(Med|Avg|Max|Min|Listings|Presented|Quick Statistics|Property Type|Market Analysis|Copyright|Information|Total|Subject)\b/.test(ln);
+    for (const ln of lines) {
+      if (isRow(ln)) { if (cur) blocks.push(cur); cur = ln; }
+      else if (cur != null) { if (isStop(ln)) { blocks.push(cur); cur = null; } else cur += ' ' + ln; }
+    }
+    if (cur) blocks.push(cur);
+    const out = [];
+    const toK = (s) => '$' + Math.round(parseInt(String(s).replace(/[^0-9]/g, ''), 10) / 1000) + 'K';
+    for (const b of blocks) {
+      const solds = [...b.matchAll(/\$\s?(\d{3}(?:,\d{3})+)/g)].map((m) => m[1]);
+      if (!solds.length) continue;
+      const sold = solds[solds.length - 1];
+      let am = b.match(/^\s*\d{1,2}\s+\d{7,8}\s+\d\s+\d{4}\s+([^$\t]+?)\s+\$/);
+      if (!am) am = b.match(/\t\s*([^$\t]{4,}?)\s+\$/);
+      const address = am ? am[1].replace(/\s+/g, ' ').trim() : '';
+      if (!address) continue;
+      const sq = b.match(/(?:^|[^$\d])(\d,\d{3})(?!\d)/);
+      const sqft = sq ? sq[1] : '';
+      const psfs = [...b.matchAll(/\$\s?(\d{2,3}\.\d{2})/g)].map((m) => m[1]);
+      const psf = psfs.length ? '$' + Math.round(parseFloat(psfs[psfs.length - 1])) : '';
+      const dm = b.match(/\b(?:No|Yes)\s+\*?(\d{1,3})\b/);
+      const dom = dm ? dm[1] : '';
+      out.push({ address: address, sold: toK(sold), sqft: sqft, psf: psf, dom: dom });
+    }
+    return out;
+  }
+  renderVals() {
+    const T = this.state.type, S = this.state.scheme;
+    const typeMeta = [
+      { id: 'buyer', name: 'Buyer', desc: 'Win the home — process, offer strategy, path to keys.' },
+      { id: 'prelisting', name: 'Pre-Listing', desc: 'Evergreen marketing strategy. No comps or price.' },
+      { id: 'listing', name: 'Listing', desc: 'Full deck with live comps + recommended price.' },
+      { id: 'relisting', name: 'Re-Listing', desc: 'For a home that didn’t sell the first time.' }
+    ];
+    const types = typeMeta.map((t) => ({ id: t.id, name: t.name, desc: t.desc, sel: t.id === T }));
+    const showProperty = (T === 'listing' || T === 'relisting');
+    const tn = typeMeta.find((t) => t.id === T);
+    return {
+      types,
+      schemeNavySel: S === 'navy', schemeEditorialSel: S === 'editorial', schemeLuxurySel: S === 'luxury',
+      showProperty, showComps: showProperty,
+      typeName: tn ? tn.name : '',
+      comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
+      clientName: this.state.clientName, agentName: this.state.agentName,
+      agentPhone: this.state.agentPhone, agentEmail: this.state.agentEmail, agentBio: this.state.agentBio, agentPhoto: this.state.agentPhoto, hasPhoto: !!this.state.agentPhoto, headshotStatus: this.state.headshotStatus, agentInfoStatus: this.state.agentInfoStatus,
+      presentedDate: this.state.presentedDate, propertyAddress: this.state.propertyAddress,
+      recommendedLow: this.state.recommendedLow, recommendedHigh: this.state.recommendedHigh,
+      onType: this.onType, onScheme: this.onScheme, onField: this.onField,
+      onCMA: this.onCMA, onRealist: this.onRealist, onHeadshot: this.onHeadshot, onAgentInfo: this.onAgentInfo, toggleSkip: this.toggleSkip, onComp: this.onComp, addComp: this.addComp, removeComp: this.removeComp, open: this.open
+    };
+  }
+}
+</script>
+</body>
+</html>

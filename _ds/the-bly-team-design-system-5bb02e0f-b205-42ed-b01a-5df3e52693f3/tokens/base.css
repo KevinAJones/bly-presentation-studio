@@ -1,0 +1,59 @@
+/* ============================================================
+   Base — The Bly Team. Light resets + helper classes.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings: Lato by default. Add .display for Manrope. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-2xl); font-weight: var(--fw-black); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-tight);
+}
+
+p { margin: 0 0 1em; text-wrap: pretty; }
+a { color: var(--text-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-xs);
+}
+
+img { max-width: 100%; display: block; }

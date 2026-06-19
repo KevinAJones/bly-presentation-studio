@@ -1,0 +1,43 @@
+/* ============================================================
+   Presentation Kit — brand context for The Bly Team's
+   buyer/seller presentation decks + Presentation Studio.
+
+   These decks were authored in the team's editorial brand
+   (Oswald display · Playfair Display italic accent · Plus
+   Jakarta Sans body · navy/royal/gold). That layer lives here,
+   self-contained, so the decks render exactly as designed
+   without depending on the root design-system tokens.
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+:root {
+  /* Typefaces */
+  --f-display: "Oswald", system-ui, sans-serif;          /* condensed display, uppercase headings */
+  --f-serif:   "Playfair Display", Georgia, serif;        /* italic editorial accent */
+  --f-body:    "Plus Jakarta Sans", system-ui, sans-serif;/* body + UI */
+
+  /* Brand color system (sampled from team collateral) */
+  --navy-950:    #091d38;
+  --navy:        #0b2747;
+  --navy-600:    #16407a;
+  --royal:       #1f60aa;
+  --royal-bright:#2f78c8;
+  --gold:        #c79a3e;
+  --gold-soft:   #dcb86a;
+  --gold-deep:   #a8812f;
+  --green:       #1d7d54;
+  --red:         #c0492f;
+
+  /* Ink / text */
+  --ink:       #0d2543;
+  --ink-soft:  #4c607a;
+  --ink-faint: #8395ab;
+
+  /* Surfaces / lines */
+  --bg:          #ccd1d8;
+  --panel:       #ffffff;
+  --panel-2:     #f3f6fa;
+  --line:        #e3e9f0;
+  --line-strong: #cdd6e2;
+  --field-line:  #cdd8e6;
+}

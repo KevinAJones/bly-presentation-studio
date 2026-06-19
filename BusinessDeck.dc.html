@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Business Deck" description="On-brand presentation deck — title, agenda, section, content, stats, statement, comparison & closing slides" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: #E9EAEE; }
+  .deck-wrap { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 40px 20px 80px; }
+  .slide-label { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9A99A3; align-self: flex-start; margin-left: max(20px, calc(50% - 640px)); }
+</style>
+</helmet>
+
+<div class="deck-wrap">
+
+  <span class="slide-label">01 — Title</span>
+  <section data-screen-label="Title" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:radial-gradient(120% 130% at 82% 8%,#16306a 0%,#0C0F24 58%);font-family:var(--font-body);color:#fff;">
+    <img src="assets/logos/bly-logo-white.png" alt="The Bly Team" style="position:absolute;top:56px;left:64px;height:46px;" />
+    <div style="position:absolute;left:64px;top:248px;right:64px;">
+      <div style="font-weight:700;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#91A3C9;margin-bottom:22px;">The Bly Team · FY26</div>
+      <h1 style="font-family:var(--font-display);font-weight:800;font-size:78px;line-height:1.0;letter-spacing:-.03em;margin:0 0 22px;max-width:16ch;color:#fff;">A better way to buy &amp; sell.</h1>
+      <p style="font-size:21px;line-height:1.5;color:rgba(255,255,255,.78);max-width:52ch;margin:0;">A presentation framework for guiding clients home with confidence, clarity, and care.</p>
+    </div>
+    <div style="position:absolute;left:64px;right:64px;bottom:54px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.16);padding-top:22px;">
+      <span style="font-size:15px;color:rgba(255,255,255,.7);">Presented by Deborah Bly · League City, TX</span>
+      <span style="display:flex;flex-direction:column;line-height:1.05;text-align:right;"><span style="font-family:var(--font-heading);font-weight:900;font-size:18px;color:#fff;">eXp</span><span style="font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:2px;">Realty</span></span>
+    </div>
+  </section>
+
+  <span class="slide-label">02 — Agenda</span>
+  <section data-screen-label="Agenda" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:#fff;font-family:var(--font-body);display:grid;grid-template-columns:0.85fr 1.15fr;">
+    <div style="background:var(--surface-subtle);padding:80px 56px;display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-primary);margin-bottom:16px;">The conversation</div>
+      <h2 style="font-family:var(--font-heading);font-weight:900;font-size:50px;line-height:1.05;letter-spacing:-.02em;color:var(--text-strong);margin:0;">What we'll<br/>cover today.</h2>
+    </div>
+    <div style="padding:80px 64px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
+      <div style="display:flex;gap:22px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--divider);"><span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--bly-blue-300);width:44px;">01</span><div><div style="font-family:var(--font-heading);font-weight:700;font-size:21px;color:var(--text-strong);">The opportunity</div><div style="font-size:15px;color:var(--text-muted);">Why now, and what it means for you</div></div></div>
+      <div style="display:flex;gap:22px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--divider);"><span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--bly-blue-300);width:44px;">02</span><div><div style="font-family:var(--font-heading);font-weight:700;font-size:21px;color:var(--text-strong);">Where the market is</div><div style="font-size:15px;color:var(--text-muted);">The numbers, in plain language</div></div></div>
+      <div style="display:flex;gap:22px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--divider);"><span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--bly-blue-300);width:44px;">03</span><div><div style="font-family:var(--font-heading);font-weight:700;font-size:21px;color:var(--text-strong);">What we recommend</div><div style="font-size:15px;color:var(--text-muted);">Our strategy for your home</div></div></div>
+      <div style="display:flex;gap:22px;align-items:baseline;padding:18px 0;"><span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--bly-blue-300);width:44px;">04</span><div><div style="font-family:var(--font-heading);font-weight:700;font-size:21px;color:var(--text-strong);">Your next steps</div><div style="font-size:15px;color:var(--text-muted);">A clear, simple path forward</div></div></div>
+    </div>
+  </section>
+
+  <span class="slide-label">03 — Section divider</span>
+  <section data-screen-label="Section divider" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:var(--navy);font-family:var(--font-body);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 80px;">
+    <div style="font-family:var(--font-display);font-weight:800;font-size:160px;line-height:1;letter-spacing:-.04em;color:rgba(145,163,201,.22);margin-bottom:8px;">01</div>
+    <div style="font-weight:700;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#91A3C9;margin-bottom:14px;">Section one</div>
+    <h2 style="font-family:var(--font-display);font-weight:800;font-size:64px;line-height:1.04;letter-spacing:-.03em;color:#fff;margin:0;max-width:18ch;">The opportunity in today's market.</h2>
+  </section>
+
+  <span class="slide-label">04 — Content</span>
+  <section data-screen-label="Content" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:#fff;font-family:var(--font-body);padding:78px 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-content:center;">
+    <div>
+      <div style="font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-primary);margin-bottom:16px;">Frame the message</div>
+      <h2 style="font-family:var(--font-heading);font-weight:900;font-size:42px;line-height:1.08;letter-spacing:-.02em;color:var(--text-strong);margin:0 0 18px;">It's not about the market. It's about your move.</h2>
+      <p style="font-size:17px;line-height:1.65;color:var(--text-body);margin:0;">The agents who communicate clearly, follow up well, and educate their clients are the ones who win — in any market. Here's how we put that to work for you.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="display:flex;gap:16px;"><div style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--bly-blue);margin-top:8px;"></div><div><div style="font-family:var(--font-heading);font-weight:700;font-size:19px;color:var(--text-strong);margin-bottom:3px;">Local expertise</div><div style="font-size:15.5px;line-height:1.55;color:var(--text-muted);">Deep, street-level knowledge of Houston &amp; Galveston pricing and timing.</div></div></div>
+      <div style="display:flex;gap:16px;"><div style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--bly-blue);margin-top:8px;"></div><div><div style="font-family:var(--font-heading);font-weight:700;font-size:19px;color:var(--text-strong);margin-bottom:3px;">Clear communication</div><div style="font-size:15.5px;line-height:1.55;color:var(--text-muted);">You always know what's happening and what comes next.</div></div></div>
+      <div style="display:flex;gap:16px;"><div style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--bly-blue);margin-top:8px;"></div><div><div style="font-family:var(--font-heading);font-weight:700;font-size:19px;color:var(--text-strong);margin-bottom:3px;">A proven plan</div><div style="font-size:15.5px;line-height:1.55;color:var(--text-muted);">Pricing, presentation, and marketing that create urgency early.</div></div></div>
+    </div>
+  </section>
+
+  <span class="slide-label">05 — Proof points</span>
+  <section data-screen-label="Proof points" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:var(--surface-subtle);font-family:var(--font-body);padding:78px 80px;display:flex;flex-direction:column;justify-content:center;">
+    <div style="font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-primary);margin-bottom:12px;">The track record</div>
+    <h2 style="font-family:var(--font-heading);font-weight:900;font-size:44px;letter-spacing:-.02em;color:var(--text-strong);margin:0 0 48px;">Results that speak for themselves.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:36px;">
+      <div><div style="font-family:var(--font-display);font-weight:800;font-size:60px;line-height:1;letter-spacing:-.03em;color:var(--bly-blue);">1,200+</div><div style="font-size:16px;color:var(--text-muted);margin-top:8px;">Homes sold</div></div>
+      <div><div style="font-family:var(--font-display);font-weight:800;font-size:60px;line-height:1;letter-spacing:-.03em;color:var(--bly-blue);">$480M</div><div style="font-size:16px;color:var(--text-muted);margin-top:8px;">In closed volume</div></div>
+      <div><div style="font-family:var(--font-display);font-weight:800;font-size:60px;line-height:1;letter-spacing:-.03em;color:var(--bly-blue);">4.9★</div><div style="font-size:16px;color:var(--text-muted);margin-top:8px;">Average client rating</div></div>
+      <div><div style="font-family:var(--font-display);font-weight:800;font-size:60px;line-height:1;letter-spacing:-.03em;color:var(--bly-blue);">15+</div><div style="font-size:16px;color:var(--text-muted);margin-top:8px;">Years serving Houston</div></div>
+    </div>
+  </section>
+
+  <span class="slide-label">06 — Statement</span>
+  <section data-screen-label="Statement" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:radial-gradient(120% 130% at 18% 12%,#16306a 0%,#0C0F24 60%);font-family:var(--font-body);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 96px;">
+    <div style="font-family:var(--font-display);font-weight:300;font-size:46px;line-height:1.28;letter-spacing:-.01em;color:#fff;max-width:24ch;">&ldquo;To serve as a trusted adviser to our community, clients, and friends.&rdquo;</div>
+    <div style="margin-top:36px;display:flex;align-items:center;gap:14px;"><div style="width:40px;height:2px;background:#91A3C9;"></div><span style="font-size:16px;font-weight:700;letter-spacing:.04em;color:#91A3C9;">The Bly Team mission</span></div>
+  </section>
+
+  <span class="slide-label">07 — Comparison</span>
+  <section data-screen-label="Comparison" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:#fff;font-family:var(--font-body);padding:78px 80px;display:flex;flex-direction:column;justify-content:center;">
+    <div style="font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-primary);margin-bottom:12px;">Frame the choice</div>
+    <h2 style="font-family:var(--font-heading);font-weight:900;font-size:44px;letter-spacing:-.02em;color:var(--text-strong);margin:0 0 40px;">Who you work with matters.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <div style="border:1px solid var(--border);border-radius:16px;padding:32px;">
+        <div style="font-family:var(--font-heading);font-weight:700;font-size:20px;color:var(--text-muted);margin-bottom:18px;">Going it alone</div>
+        <div style="display:flex;flex-direction:column;gap:14px;font-size:16px;color:var(--text-muted);">
+          <div>Guessing on price and timing</div>
+          <div>Limited marketing reach</div>
+          <div>Slow, uncertain communication</div>
+          <div>Negotiating without leverage</div>
+        </div>
+      </div>
+      <div style="border:1.5px solid var(--bly-blue);background:var(--bly-blue-050);border-radius:16px;padding:32px;">
+        <div style="font-family:var(--font-heading);font-weight:700;font-size:20px;color:var(--bly-blue-700);margin-bottom:18px;">With The Bly Team</div>
+        <div style="display:flex;flex-direction:column;gap:14px;font-size:16px;color:var(--text-body);font-weight:600;">
+          <div>Data-backed pricing strategy</div>
+          <div>Full-funnel marketing &amp; reach</div>
+          <div>Proactive, clear updates</div>
+          <div>Expert negotiation on your side</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <span class="slide-label">08 — Closing</span>
+  <section data-screen-label="Closing" style="width:1280px;height:720px;flex:none;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 14px 50px rgba(12,15,36,.18);background:var(--navy);font-family:var(--font-body);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 80px;">
+    <div style="font-weight:700;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#91A3C9;margin-bottom:18px;">Your next step</div>
+    <h2 style="font-family:var(--font-display);font-weight:800;font-size:72px;line-height:1.02;letter-spacing:-.03em;color:#fff;margin:0 0 28px;">Let's make<br/>your move.</h2>
+    <p style="font-size:19px;color:rgba(255,255,255,.78);max-width:50ch;margin:0 0 44px;">Pick five minutes this week. We'll map out exactly what your home is worth and what comes next.</p>
+    <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:17px;color:#fff;font-weight:700;">(832) 932-5435</span>
+      <div style="width:1px;height:24px;background:rgba(255,255,255,.2);"></div>
+      <span style="font-size:17px;color:#fff;font-weight:700;">clientcare@agentbly.com</span>
+      <div style="width:1px;height:24px;background:rgba(255,255,255,.2);"></div>
+      <span style="font-size:17px;color:rgba(255,255,255,.78);">blyteam.com</span>
+    </div>
+    <img src="assets/logos/bly-logo-white.png" alt="The Bly Team" style="position:absolute;right:80px;bottom:54px;height:40px;" />
+  </section>
+
+</div>
+
+</x-dc>
+</body>
+</html>

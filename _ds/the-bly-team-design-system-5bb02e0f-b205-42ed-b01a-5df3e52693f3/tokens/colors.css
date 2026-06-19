@@ -1,0 +1,79 @@
+/* ============================================================
+   Colors — The Bly Team
+   A black/navy/white foundation with Bly Blue as the signature
+   accent.
+   ============================================================ */
+:root {
+  /* ---- Brand primary ---------------------------------------- */
+  --bly-blue:        #00519B;  /* signature brand blue */
+  --bly-blue-600:    #0A60AE;  /* hover (slightly lighter on dark) */
+  --bly-blue-700:    #003F79;  /* pressed / deeper */
+  --bly-blue-300:    #4D86BE;  /* tints, focus rings */
+  --bly-blue-100:    #DCE8F3;  /* wash / selected bg */
+  --bly-blue-050:    #EFF5FB;  /* faint wash */
+
+  /* ---- Core neutrals --------------------------------------- */
+  --black:           #000000;
+  --navy:            #0C0F24;  /* deep navy — elevated surfaces */
+  --charcoal-blue:   #31303F;  /* body text on light, dark UI */
+  --moss-grey:       #686672;  /* muted text, captions */
+  --grey-400:        #9A99A3;  /* disabled text, hints */
+  --grey-300:        #C7C6CD;  /* borders on dark-ish */
+  --light-grey:      #EFEFEF;  /* subtle surface (core spec) */
+  --grey-100:        #EEEEEE;  /* subtle surface (elevated spec) */
+  --grey-050:        #F7F7F8;  /* lowest elevation surface */
+  --white:           #FFFFFF;
+
+  /* ---- Secondary — core palette ---------------------------- */
+  --slate-blue:      #447BC4;  /* approachable blue */
+  --cherry-red:      #DB252B;  /* alert / sale / urgency */
+  --forest-green:    #49A647;  /* success / available */
+  --soft-gold:       #E1BA62;  /* premium / featured highlight */
+
+  /* ---- Secondary — elevated palette ------------------------ */
+  --slate-blue-deep: #506CAA;
+  --frosted-blue:    #91A3C9;
+  --frosted-blue-100:#E7ECF4;
+
+  /* =========================================================
+     Semantic aliases — use these in components, not raw hues
+     ========================================================= */
+  --color-primary:        var(--bly-blue);
+  --color-primary-hover:  var(--bly-blue-700);
+  --color-primary-soft:   var(--bly-blue-100);
+  --color-on-primary:     var(--white);
+  --color-focus-ring:     color-mix(in srgb, var(--bly-blue) 45%, transparent);
+
+  /* Text */
+  --text-strong:   var(--navy);        /* headings */
+  --text-body:     var(--charcoal-blue);
+  --text-muted:    var(--moss-grey);
+  --text-faint:    var(--grey-400);
+  --text-on-dark:  var(--white);
+  --text-on-dark-muted: color-mix(in srgb, var(--white) 68%, transparent);
+  --text-link:     var(--bly-blue);
+
+  /* Surfaces */
+  --surface-page:    var(--white);
+  --surface-subtle:  var(--grey-050);
+  --surface-sunken:  var(--light-grey);
+  --surface-card:    var(--white);
+  --surface-inverse: var(--navy);
+  --surface-inverse-2: var(--charcoal-blue);
+
+  /* Borders / dividers */
+  --border:        #E3E3E6;
+  --border-strong: #CFCFD4;
+  --border-on-dark: color-mix(in srgb, var(--white) 16%, transparent);
+  --divider:       #ECECEF;
+
+  /* Status */
+  --color-success: var(--forest-green);
+  --color-success-soft: #E6F3E6;
+  --color-danger:  var(--cherry-red);
+  --color-danger-soft:  #FBE4E4;
+  --color-warning: var(--soft-gold);
+  --color-warning-soft: #FAF1DC;
+  --color-info:    var(--slate-blue);
+  --color-info-soft: var(--bly-blue-050);
+}

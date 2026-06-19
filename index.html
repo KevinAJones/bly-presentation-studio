@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Bly Team — Presentation Studio</title>
+<meta name="description" content="Build on-brand buyer, listing, pre-listing and re-listing presentations for The Bly Team. Pick a deck, drop in your details, present live or export to PDF.">
+<link rel="icon" href="assets/bly-logo-navy.png">
+<link rel="stylesheet" href="presentations/presentation-kit.css">
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    font-family:var(--f-body);
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 18% 6%, #d9dde2, transparent 52%),
+      linear-gradient(160deg,#d2d6dc,#c5cad1);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:1060px; margin:0 auto; padding:56px 24px 120px; }
+
+  /* header */
+  .masthead{ display:flex; align-items:center; gap:18px; margin-bottom:46px; }
+  .masthead img{ height:48px; }
+  .masthead .rule{ width:1px; height:38px; background:var(--line-strong); }
+  .eyebrow{
+    font-family:var(--f-body); font-weight:700; font-size:13px;
+    letter-spacing:.24em; text-transform:uppercase; color:var(--royal);
+  }
+
+  /* hero */
+  h1{
+    font-family:var(--f-display); font-weight:700; text-transform:uppercase;
+    font-size:clamp(40px,7vw,64px); line-height:1.02; letter-spacing:.005em;
+    margin:0 0 16px; color:var(--ink); max-width:18ch;
+  }
+  h1 em{
+    font-family:var(--f-serif); font-style:italic; text-transform:none;
+    color:var(--royal-bright); font-weight:600;
+  }
+  .lede{
+    font-size:19px; line-height:1.6; color:var(--ink-soft); font-weight:500;
+    max-width:62ch; margin:0 0 34px;
+  }
+
+  /* primary CTA */
+  .cta-row{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-bottom:64px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+    font-family:var(--f-body); font-weight:700; font-size:16px; text-decoration:none;
+    padding:15px 28px; border-radius:12px; border:0; transition:transform .12s ease, filter .12s ease;
+  }
+  .btn-primary{ color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright));
+    box-shadow:0 18px 40px -22px rgba(11,39,71,.7); }
+  .btn-primary:hover{ filter:brightness(1.07); transform:translateY(-1px); }
+  .btn-ghost{ color:var(--royal); background:#fff; border:1px solid var(--line-strong); }
+  .btn-ghost:hover{ transform:translateY(-1px); }
+
+  /* section heading */
+  .section-label{
+    font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center;
+    gap:11px; margin:0 0 22px;
+  }
+  .section-label span{ width:20px; height:2px; background:var(--gold); }
+
+  /* deck grid */
+  .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .card{
+    display:flex; flex-direction:column; text-decoration:none; background:#fff;
+    border:1px solid var(--line); border-radius:18px; padding:28px 30px;
+    box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -50px rgba(11,39,71,.5);
+    transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+  }
+  .card:hover{ transform:translateY(-3px); border-color:var(--royal-bright);
+    box-shadow:0 1px 0 rgba(11,39,71,.04), 0 36px 70px -44px rgba(11,39,71,.55); }
+  .card h3{
+    font-family:var(--f-display); font-weight:600; text-transform:uppercase;
+    font-size:24px; letter-spacing:.01em; color:var(--ink); margin:0 0 8px;
+  }
+  .card p{ font-size:15px; line-height:1.5; color:var(--ink-soft); margin:0 0 16px; }
+  .card .open{
+    margin-top:auto; font-weight:700; font-size:14px; color:var(--royal);
+    display:inline-flex; align-items:center; gap:7px;
+  }
+
+  footer{
+    margin-top:72px; padding-top:28px; border-top:1px solid var(--line-strong);
+    font-size:14px; line-height:1.7; color:var(--ink-faint);
+  }
+  footer a{ color:var(--royal); text-decoration:none; }
+  footer strong{ color:var(--ink-soft); font-weight:700; }
+
+  @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="masthead">
+      <img src="assets/bly-logo-navy.png" alt="The Bly Team">
+      <div class="rule"></div>
+      <div class="eyebrow">Presentation Studio</div>
+    </div>
+
+    <h1>Client presentations, <em>on brand</em>.</h1>
+    <p class="lede">
+      Pick a presentation, choose a look, drop in your client, property, price and comps —
+      then open a polished deck to present live or export to PDF. Every slide stays in
+      The Bly Team brand.
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="presentations/presentation-studio/PresentationStudio.dc.html">
+        Open Presentation Studio →
+      </a>
+      <a class="btn btn-ghost" href="BusinessDeck.dc.html">View the business deck</a>
+    </div>
+
+    <div class="section-label"><span></span>Preview the deck templates</div>
+    <div class="grid">
+      <a class="card" href="presentations/buyer-presentation/BuyerPresentation.dc.html">
+        <h3>Buyer</h3>
+        <p>Win the home — process, offer strategy, and the path to keys.</p>
+        <span class="open">Preview deck →</span>
+      </a>
+      <a class="card" href="presentations/pre-listing-presentation/PreListingPresentation.dc.html">
+        <h3>Pre-Listing</h3>
+        <p>Evergreen marketing strategy. No comps or price required.</p>
+        <span class="open">Preview deck →</span>
+      </a>
+      <a class="card" href="presentations/listing-presentation/ListingPresentation.dc.html">
+        <h3>Listing</h3>
+        <p>Full deck with live comparable sales and a recommended price.</p>
+        <span class="open">Preview deck →</span>
+      </a>
+      <a class="card" href="presentations/relisting-presentation/ReListingPresentation.dc.html">
+        <h3>Re-Listing</h3>
+        <p>For a home that didn't sell the first time — a sharper plan.</p>
+        <span class="open">Preview deck →</span>
+      </a>
+    </div>
+
+    <footer>
+      <strong>The Bly Team</strong> · eXp Realty · League City &amp; Houston, TX<br>
+      <a href="https://blyteam.com">blyteam.com</a> · clientcare@agentbly.com · (832) 932-5435<br>
+      <span style="display:inline-block;margin-top:10px;">Tip: start in the Studio — your details flow automatically into whichever deck you open.</span>
+    </footer>
+
+  </div>
+</body>
+</html>

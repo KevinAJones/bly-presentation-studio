@@ -1,0 +1,44 @@
+/* ============================================================
+   Typography — The Bly Team
+   Lato = body + UI (primary brand face; Bold for emphasis).
+   Manrope = display / elevated headlines (ExtraBold + Light).
+   Brand rule: do NOT use Manrope for body copy.
+   ============================================================ */
+:root {
+  /* ---- Families ------------------------------------------- */
+  --font-body:    "Lato", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-heading: "Lato", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Manrope", "Lato", -apple-system, "Segoe UI", sans-serif;
+
+  /* ---- Weights -------------------------------------------- */
+  --fw-light:     300; /* @kind font */
+  --fw-regular:   400; /* @kind font */
+  --fw-bold:      700; /* @kind font */
+  --fw-black:     900; /* @kind font */
+  --fw-display:   800; /* @kind font */
+
+  /* ---- Type scale (1.25 major-third, 16px base) ----------- */
+  --text-xs:    0.75rem;   /* 12px  micro labels */
+  --text-sm:    0.875rem;  /* 14px  captions, meta */
+  --text-base:  1rem;      /* 16px  body */
+  --text-md:    1.125rem;  /* 18px  lead body */
+  --text-lg:    1.375rem;  /* 22px  card titles */
+  --text-xl:    1.75rem;   /* 28px  section subheads */
+  --text-2xl:   2.25rem;   /* 36px  page headings */
+  --text-3xl:   3rem;      /* 48px  hero */
+  --text-4xl:   4rem;      /* 64px  display */
+  --text-5xl:   5.25rem;   /* 84px  big display */
+
+  /* ---- Line heights -------------------------------------- */
+  --leading-tight:   1.08;
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  /* ---- Letter spacing ------------------------------------ */
+  --tracking-tighter: -0.03em;  /* large Manrope display */
+  --tracking-tight:   -0.015em; /* headings */
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.14em;   /* eyebrow / overline caps */
+}

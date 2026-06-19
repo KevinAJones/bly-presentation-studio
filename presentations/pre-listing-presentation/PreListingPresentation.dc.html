@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Pre-Listing Presentation" description="Evergreen pre-listing deck — track record, marketing plan, momentum & process (no comps or price). Switchable across 3 brand color schemes (Navy / Editorial / Luxury); personalize client & agent." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  /* ── 3 selectable brand color schemes (token values only; markup paints with navy fallback) ── */
+  :root{
+    --p-cover: linear-gradient(140deg,#091f3b 0%,#10325e 52%,#1b4d90 100%);
+    --p-cover-ink:#ffffff; --p-cover-sub:rgba(255,255,255,.80); --p-cover-eye:#dcb86a;
+    --p-logo-white-d:block; --p-logo-navy-d:none;
+    --p-surface: radial-gradient(circle at 16% 8%,#fbfcfe,transparent 55%), linear-gradient(165deg,#f4f7fb,#e9eef5);
+    --p-band: linear-gradient(135deg,#091f3b 0%,#10325e 52%,#184a8c 100%);
+    --p-ink:#0d2543; --p-ink-soft:#4c607a; --p-faint:#8395ab;
+    --p-accent:#1f60aa; --p-accent2:#2f78c8; --p-gold:#a8812f; --p-green:#1d7d54; --p-red:#c0492f;
+    --p-card:#ffffff; --p-line:#e3e9f0; --p-subcard:#f3f6fa;
+    --p-head:"Oswald",system-ui,sans-serif; --p-head-tt:uppercase; --p-head-w:700; --p-head-lh:1.04; --p-head-ls:.005em;
+    --p-em-font:"Playfair Display",Georgia,serif; --p-em-color:#2f78c8; --p-em-w:600;
+    --p-frame:transparent; --p-label-ls:.16em;
+  }
+  :root[data-scheme="editorial"]{
+    --p-cover: radial-gradient(circle at 50% -10%,#ffffff,transparent 60%), linear-gradient(168deg,#eef2f7,#dde4ee);
+    --p-cover-ink:#0d2543; --p-cover-sub:#4c607a; --p-cover-eye:#a8812f;
+    --p-logo-white-d:none; --p-logo-navy-d:block;
+    --p-surface: linear-gradient(170deg,#ffffff,#f1f4f9);
+    --p-card:#ffffff; --p-line:#e7ecf3;
+    --p-accent:#1f60aa; --p-gold:#a8812f;
+  }
+  :root[data-scheme="luxury"]{
+    --p-cover: linear-gradient(180deg,#06122a 0%,#0a1f3b 55%,#06122a 100%);
+    --p-cover-ink:#ffffff; --p-cover-sub:rgba(255,255,255,.82); --p-cover-eye:#dcb86a;
+    --p-logo-white-d:block; --p-logo-navy-d:none;
+    --p-surface: linear-gradient(170deg,#f7f4ee 0%,#efeae0 100%);
+    --p-band: linear-gradient(160deg,#06122a 0%,#0c2444 100%);
+    --p-ink:#1b2438; --p-ink-soft:#5c5345; --p-faint:#9c8f78;
+    --p-accent:#a8812f; --p-accent2:#c79a3e; --p-gold:#a8812f;
+    --p-card:#fffdf8; --p-line:rgba(168,129,47,.30); --p-subcard:#f4efe4;
+    --p-head:"Playfair Display",Georgia,serif; --p-head-tt:none; --p-head-w:600; --p-head-lh:1.1; --p-head-ls:.004em;
+    --p-em-font:"Playfair Display",Georgia,serif; --p-em-color:#a8812f; --p-em-w:500;
+    --p-frame:rgba(199,154,62,.55); --p-label-ls:.30em;
+  }
+  *{ box-sizing:border-box; }
+</style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <!-- ═════════ 01 · COVER ═════════ -->
+  <section data-label="Cover" data-screen-label="01" style="background:var(--p-cover); color:var(--p-cover-ink); padding:104px 120px; display:flex; flex-direction:column;">
+    <div style="position:absolute; inset:42px; border:1px solid var(--p-frame); pointer-events:none;"></div>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; position:relative;">
+      <div>
+        <img src="../../assets/bly-logo-white.png" alt="The Bly Team" style="height:64px; display:var(--p-logo-white-d);">
+        <img src="../../assets/bly-logo-navy.png" alt="The Bly Team" style="height:64px; display:var(--p-logo-navy-d);">
+      </div>
+      <div style="font-family:var(--f-body); font-weight:700; font-size:22px; letter-spacing:.28em; text-transform:uppercase; color:var(--p-cover-eye); text-align:right; padding-top:10px;">Pre-Listing Presentation</div>
+    </div>
+    <div style="margin-top:auto; position:relative;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:24px; letter-spacing:.30em; text-transform:uppercase; color:var(--p-cover-eye); display:flex; align-items:center; gap:18px; margin-bottom:34px;"><span style="width:48px; height:2px; background:var(--p-gold); display:inline-block;"></span>Houston &amp; the Gulf Coast</div>
+      <h1 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-cover-ink); margin:0; font-size:108px; max-width:18ch;">Your home, <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">sold</em> with strategy.</h1>
+      <p style="font-family:var(--f-body); font-weight:500; font-size:30px; line-height:1.5; color:var(--p-cover-sub); margin:30px 0 0; max-width:44ch;">A proven, full-service marketing plan designed to net you the most — in the least time.</p>
+    </div>
+    <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; position:relative; padding-top:48px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <sc-if value="{{ hasClient }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="font-family:var(--f-body); font-weight:600; font-size:21px; letter-spacing:.04em; text-transform:uppercase; color:var(--p-cover-sub);">Prepared for</div>
+          <div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:36px; letter-spacing:.02em; color:var(--p-cover-ink); line-height:1.12;">{{ clientName }}</div>
+        </div>
+        </sc-if>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:21px; color:var(--p-cover-sub);">Houston &amp; the Gulf Coast</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.06em; color:var(--p-cover-eye);">{{ agentName }}</div>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-cover-sub); margin-top:6px;">{{ agentPhone }} &nbsp;·&nbsp; {{ presentedDate }}</div>
+      </div>
+    </div>
+    <div style="position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--p-gold);"></div>
+  </section>
+
+  <!-- ═════════ CONSULTANT · TEACHER · ADVOCATE ═════════ -->
+  <section data-label="Our Role" data-screen-label="02" style="background:var(--p-band); color:#fff; padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="position:absolute; inset:42px; border:1px solid var(--p-frame); pointer-events:none;"></div>
+    <div style="position:relative;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-cover-eye); display:flex; align-items:center; gap:14px; margin-bottom:26px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Our role in your sale</div>
+      <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:#fff; margin:0; font-size:88px;">Consultant. <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:#bcd6f2;">Teacher.</em> Advocate.</h2>
+      <p style="font-family:var(--f-body); font-weight:500; font-size:28px; line-height:1.6; color:rgba(255,255,255,.80); margin:30px 0 0; max-width:54ch;">We don’t just list homes. We guide you through one of the biggest financial decisions of your life.</p>
+    </div>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:0 64px; position:relative;">
+      <div style="border-top:2px solid var(--p-gold); padding-top:30px;"><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:40px; letter-spacing:.02em; color:#fff;">Consultant</div><div style="font-family:var(--f-body); font-weight:500; font-size:23px; color:rgba(255,255,255,.78); line-height:1.55; margin-top:16px;">We help you evaluate the market and choose the right strategy for your goals.</div></div>
+      <div style="border-top:2px solid var(--p-gold); padding-top:30px;"><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:40px; letter-spacing:.02em; color:#fff;">Teacher</div><div style="font-family:var(--f-body); font-weight:500; font-size:23px; color:rgba(255,255,255,.78); line-height:1.55; margin-top:16px;">We explain the process, the data, and the reasoning behind every recommendation.</div></div>
+      <div style="border-top:2px solid var(--p-gold); padding-top:30px;"><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:40px; letter-spacing:.02em; color:#fff;">Advocate</div><div style="font-family:var(--f-body); font-weight:500; font-size:23px; color:rgba(255,255,255,.78); line-height:1.55; margin-top:16px;">We protect your equity, negotiate on your behalf, and help you avoid costly mistakes.</div></div>
+    </div>
+  </section>
+
+  <!-- ═════════ 02 · MEET THE TEAM ═════════ -->
+  <section data-label="Meet the Team" data-screen-label="02" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; gap:64px; align-items:stretch;">
+    <div style="width:42%; border-radius:22px; overflow:hidden; position:relative; background:var(--p-band);">
+      <sc-if value="{{ hasPhoto }}" hint-placeholder-val=""><img src="{{ agentPhoto }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></sc-if>
+      <sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; padding:48px;">
+        <div style="position:absolute; inset:0; background:radial-gradient(circle at 82% 10%, rgba(110,160,214,.30), transparent 48%), radial-gradient(circle at 8% 96%, rgba(31,96,170,.32), transparent 52%); pointer-events:none;"></div>
+        <img src="../../assets/bly-logo-white.png" alt="The Bly Team" style="width:64%; max-width:320px; position:relative;">
+        <div style="width:60px; height:2px; background:var(--p-gold); position:relative;"></div>
+        <span style="font-family:var(--f-body); font-weight:700; font-size:18px; letter-spacing:.26em; text-transform:uppercase; color:var(--p-cover-eye); position:relative; text-align:center;">Houston &amp; the Gulf Coast</span>
+      </div>
+      </sc-if>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:26px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Meet <b style="color:var(--p-accent); font-weight:700;">the team</b></div>
+      <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:74px; max-width:16ch;">A full-time team that knows <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">this market</em>.</h2>
+      <p style="font-family:var(--f-body); font-weight:500; font-size:28px; line-height:1.6; color:var(--p-ink-soft); margin:30px 0 0; max-width:46ch;">{{ bio }}</p>
+      <div style="display:flex; gap:48px; margin-top:46px;">
+        <div><div style="font-family:var(--p-head); font-weight:700; font-size:64px; color:var(--p-ink); line-height:1;">258</div><div style="font-family:var(--f-body); font-weight:600; font-size:21px; color:var(--p-ink-soft); margin-top:8px;">Homes closed / 12 mo</div></div>
+        <div><div style="font-family:var(--p-head); font-weight:700; font-size:64px; color:var(--p-ink); line-height:1;">$69.4<span style="font-size:34px; color:var(--p-accent);">M</span></div><div style="font-family:var(--f-body); font-weight:600; font-size:21px; color:var(--p-ink-soft); margin-top:8px;">Sales volume</div></div>
+        <div><div style="font-family:var(--p-head); font-weight:700; font-size:64px; color:var(--p-ink); line-height:1;">#1</div><div style="font-family:var(--f-body); font-weight:600; font-size:21px; color:var(--p-ink-soft); margin-top:8px;">In League City</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ 03 · TRACK RECORD ═════════ -->
+  <section data-label="Track Record" data-screen-label="03" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div>
+        <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:24px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>By the <b style="color:var(--p-accent); font-weight:700;">numbers</b></div>
+        <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:80px; max-width:17ch;">We're <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">outperforming</em> the market.</h2>
+      </div>
+      <img src="../../assets/bly-logo-navy.png" alt="" style="height:46px; opacity:.85;">
+    </div>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(4,1fr); gap:30px;">
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:22px; padding:44px 36px; box-shadow:0 1px 0 rgba(11,39,71,.04), 0 40px 60px -42px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:104px; line-height:.9; color:var(--p-ink);">258</div>
+        <div style="font-family:var(--f-body); font-weight:600; font-size:23px; color:var(--p-ink-soft); margin-top:18px; line-height:1.4;">Transactions closed in the last 12 months</div>
+      </div>
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:22px; padding:44px 36px; box-shadow:0 1px 0 rgba(11,39,71,.04), 0 40px 60px -42px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:104px; line-height:.9; color:var(--p-ink);">$69.4<span style="font-size:56px; color:var(--p-accent);">M</span></div>
+        <div style="font-family:var(--f-body); font-weight:600; font-size:23px; color:var(--p-ink-soft); margin-top:18px; line-height:1.4;">Total sales volume</div>
+      </div>
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:22px; padding:44px 36px; box-shadow:0 1px 0 rgba(11,39,71,.04), 0 40px 60px -42px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:104px; line-height:.9; color:var(--p-green);">98<span style="font-size:56px;">%</span></div>
+        <div style="font-family:var(--f-body); font-weight:600; font-size:23px; color:var(--p-ink-soft); margin-top:18px; line-height:1.4;">Of list price, on average</div>
+      </div>
+      <div style="background:var(--p-band); border-radius:22px; padding:44px 36px; position:relative; overflow:hidden; box-shadow:0 40px 60px -36px rgba(11,39,71,.7);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:104px; line-height:.9; color:#fff;">½</div>
+        <div style="font-family:var(--f-body); font-weight:600; font-size:23px; color:rgba(255,255,255,.85); margin-top:18px; line-height:1.4;">The market's average days on market</div>
+        <div style="position:absolute; left:0; bottom:0; height:4px; width:100%; background:var(--p-gold);"></div>
+      </div>
+    </div>
+    <div style="margin-top:40px; padding-top:26px; border-top:1px solid var(--p-line); display:flex; align-items:center; gap:18px;">
+      <span style="font-family:var(--f-body); font-weight:700; font-size:18px; letter-spacing:.16em; text-transform:uppercase; color:var(--p-gold); white-space:nowrap;">What this means for you</span>
+      <span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:24px; color:var(--p-ink-soft); line-height:1.4;">Your home is in hands that consistently sell faster and closer to list — fewer days on market, and more in your pocket.</span>
+    </div>
+    <div style="font-family:var(--f-body); font-weight:500; font-size:17px; color:var(--p-faint); margin-top:18px;">Source: HAR, trailing 12 months. The Bly Team ranks #19 among non-new-construction agents &amp; teams by total volume.</div>
+  </section>
+
+  <!-- ═════════ 04 · LOCAL LEADERSHIP ═════════ -->
+  <section data-label="Local Leadership" data-screen-label="04" style="background:var(--p-band); color:#fff; padding:96px 120px; display:flex; gap:80px; align-items:center;">
+    <div style="position:absolute; inset:42px; border:1px solid var(--p-frame); pointer-events:none;"></div>
+    <div style="flex:1; position:relative;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-cover-eye); display:flex; align-items:center; gap:14px; margin-bottom:26px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Local market leadership</div>
+      <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:#fff; margin:0; font-size:84px; max-width:14ch;">We lead the markets <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:#bcd6f2;">we serve</em>.</h2>
+      <p style="font-family:var(--f-body); font-weight:500; font-size:28px; line-height:1.6; color:rgba(255,255,255,.78); margin:30px 0 0; max-width:40ch;">We're not just active here — we rank at the top of the communities we list and sell in every day.</p>
+    </div>
+    <div style="width:46%; position:relative; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; gap:28px; padding:26px 0; border-bottom:1px solid rgba(255,255,255,.18);"><span style="font-family:var(--p-head); font-weight:700; font-size:64px; color:var(--p-cover-eye); width:130px; line-height:1;">#1</span><span style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:38px; letter-spacing:.02em;">League City</span></div>
+      <div style="display:flex; align-items:baseline; gap:28px; padding:26px 0; border-bottom:1px solid rgba(255,255,255,.18);"><span style="font-family:var(--p-head); font-weight:700; font-size:64px; color:rgba(255,255,255,.9); width:130px; line-height:1;">#3</span><span style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:38px; letter-spacing:.02em;">Galveston County</span></div>
+      <div style="display:flex; align-items:baseline; gap:28px; padding:26px 0; border-bottom:1px solid rgba(255,255,255,.18);"><span style="font-family:var(--p-head); font-weight:700; font-size:64px; color:rgba(255,255,255,.9); width:130px; line-height:1;">#6</span><span style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:38px; letter-spacing:.02em;">Dickinson</span></div>
+      <div style="display:flex; align-items:baseline; gap:28px; padding:26px 0;"><span style="font-family:var(--p-head); font-weight:700; font-size:64px; color:rgba(255,255,255,.9); width:130px; line-height:1;">#15</span><span style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:38px; letter-spacing:.02em;">Friendswood</span></div>
+    </div>
+  </section>
+
+  <!-- ═════════ 05 · MARKETING PLAN ═════════ -->
+  <section data-label="Marketing Plan" data-screen-label="05" style="background:var(--p-surface); color:var(--p-ink); padding:90px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:30px;">
+      <div>
+        <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:22px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>The marketing plan</div>
+        <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:72px; max-width:20ch;">Marketed like a <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">flagship</em> listing.</h2>
+      </div>
+      <img src="../../assets/bly-logo-navy.png" alt="" style="height:42px; opacity:.85;">
+    </div>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:1fr 1fr; gap:0 70px;">
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">01</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Architectural Photography</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Twilight &amp; interior shoot by a professional architectural photographer.</div></div></div>
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">02</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Cinematic Film &amp; Aerial</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Walk-through film and drone aerials across YouTube, Reels &amp; Facebook.</div></div></div>
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">03</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Bespoke Property Website</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">A dedicated page for your home, built to rank in Zillow, Google &amp; AI search.</div></div></div>
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">04</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Targeted Digital Campaign</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Paid social geo-targeted to qualified buyers &amp; relocation audiences.</div></div></div>
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">05</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Private Buyer Network</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">First look sent to our pre-qualified buyer database before the portals.</div></div></div>
+      <div style="padding:34px 0; border-top:1px solid var(--p-line); display:flex; gap:24px; align-items:baseline;"><span style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:42px; color:var(--p-gold); line-height:1;">06</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:26px; letter-spacing:.02em; color:var(--p-ink);">Premium Syndication</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Featured placement on Zillow, Realtor.com, Homes.com &amp; blyteam.com.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ═════════ 06 · MARKETING TIMELINE ═════════ -->
+  <section data-label="Timeline" data-screen-label="06" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:22px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Your marketing <b style="color:var(--p-accent); font-weight:700;">timeline</b></div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0 0 64px; font-size:72px;">From prep to <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">closing day</em>.</h2>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(4,1fr); gap:34px;">
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:20px; padding:40px 34px; box-shadow:0 30px 50px -40px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:30px; color:var(--p-accent); text-transform:uppercase; letter-spacing:.04em;">Week 1</div>
+        <div style="font-family:var(--p-head); font-weight:600; font-size:26px; text-transform:uppercase; color:var(--p-ink); margin:14px 0 12px;">Pre-Launch</div>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.55;">Photography, video, MLS prep, staging consult &amp; “Coming Soon” social to build demand.</div>
+      </div>
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:20px; padding:40px 34px; box-shadow:0 30px 50px -40px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:30px; color:var(--p-accent); text-transform:uppercase; letter-spacing:.04em;">Week 2</div>
+        <div style="font-family:var(--p-head); font-weight:600; font-size:26px; text-transform:uppercase; color:var(--p-ink); margin:14px 0 12px;">Active Launch</div>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.55;">MLS goes live, paid ads launch, email blast to our buyer list, open house on day 7.</div>
+      </div>
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:20px; padding:40px 34px; box-shadow:0 30px 50px -40px rgba(11,39,71,.5);">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:30px; color:var(--p-accent); text-transform:uppercase; letter-spacing:.04em;">Week 3</div>
+        <div style="font-family:var(--p-head); font-weight:600; font-size:26px; text-transform:uppercase; color:var(--p-ink); margin:14px 0 12px;">Momentum</div>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.55;">Weekly showing report, a price-positioning review at day 14, and a second social push.</div>
+      </div>
+      <div style="background:var(--p-band); border-radius:20px; padding:40px 34px; box-shadow:0 30px 50px -34px rgba(11,39,71,.7); position:relative; overflow:hidden;">
+        <div style="font-family:var(--p-head); font-weight:700; font-size:30px; color:var(--p-cover-eye); text-transform:uppercase; letter-spacing:.04em;">Offer</div>
+        <div style="font-family:var(--p-head); font-weight:600; font-size:26px; text-transform:uppercase; color:#fff; margin:14px 0 12px;">Contract &amp; Close</div>
+        <div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:rgba(255,255,255,.82); line-height:1.55;">Offer review, negotiation, inspection management &amp; closing coordination — handled.</div>
+        <div style="position:absolute; left:0; bottom:0; height:4px; width:100%; background:var(--p-gold);"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ 07 · MARKET MOMENTUM ═════════ -->
+  <section data-label="Momentum" data-screen-label="07" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:22px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Market <b style="color:var(--p-accent); font-weight:700;">momentum</b></div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:72px; max-width:20ch;">We're growing faster than <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">the market</em>.</h2>
+    <div style="margin-top:54px; display:grid; grid-template-columns:repeat(3,1fr); gap:30px;">
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:20px; padding:42px 36px; box-shadow:0 30px 50px -40px rgba(11,39,71,.5);"><div style="font-family:var(--p-head); font-weight:700; font-size:90px; line-height:.9; color:var(--p-ink);">3×</div><div style="font-family:var(--f-body); font-weight:600; font-size:22px; color:var(--p-ink-soft); margin-top:16px; line-height:1.45;">Faster sales-volume growth than the broader HAR market</div></div>
+      <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:20px; padding:42px 36px; box-shadow:0 30px 50px -40px rgba(11,39,71,.5);"><div style="font-family:var(--p-head); font-weight:700; font-size:90px; line-height:.9; color:var(--p-ink);">≈5×</div><div style="font-family:var(--f-body); font-weight:600; font-size:22px; color:var(--p-ink-soft); margin-top:16px; line-height:1.45;">The unit growth of the broader market — more families moved</div></div>
+      <div style="background:var(--p-band); border-radius:20px; padding:42px 36px; position:relative; overflow:hidden; box-shadow:0 30px 50px -34px rgba(11,39,71,.7);"><div style="font-family:var(--p-head); font-weight:700; font-size:90px; line-height:.9; color:#fff;">98<span style="font-size:48px; color:var(--p-cover-eye);">%</span></div><div style="font-family:var(--f-body); font-weight:600; font-size:22px; color:rgba(255,255,255,.85); margin-top:16px; line-height:1.45;">Of list price, on average — vs 96% for the market</div><div style="position:absolute; left:0; bottom:0; height:4px; width:100%; background:var(--p-gold);"></div></div>
+    </div>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:20px; padding-top:44px;">
+      <span style="font-family:var(--f-body); font-weight:700; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--p-gold);">Faster in a slower market</span>
+      <span style="font-family:var(--f-body); font-weight:500; font-size:22px; color:var(--p-ink-soft);">Our days on market improved <strong style="color:var(--p-green);">30.2%</strong> while the broader market slowed <strong style="color:var(--p-red);">9.7%</strong>.</span>
+    </div>
+  </section>
+
+  <!-- ═════════ THE COST OF OVERPRICING ═════════ -->
+  <section data-label="Cost of Pricing" data-screen-label="07" style="background:var(--p-surface); color:var(--p-ink); padding:72px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+      <div>
+        <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:18px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>The cost of overpricing</div>
+        <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:58px; max-width:22ch;">A home that sits nets <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">less</em>.</h2>
+      </div>
+      <img src="../../assets/bly-logo-navy.png" alt="" style="height:40px; opacity:.85;">
+    </div>
+    <div style="margin-top:auto; display:flex; gap:60px; align-items:stretch;">
+      <div style="flex:1.25; display:flex; flex-direction:column;">
+        <div style="font-family:var(--f-body); font-weight:700; font-size:19px; letter-spacing:.06em; text-transform:uppercase; color:var(--p-ink-soft); margin-bottom:18px;">Buyer interest by week on market</div>
+        <div style="display:flex; align-items:flex-end; gap:20px; height:262px; border-bottom:2px solid var(--p-line); padding-bottom:0;">
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-gold); margin-bottom:8px;">100%</div>
+            <div style="width:100%; max-width:62px; height:232px; background:var(--p-gold); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 1</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-gold); margin-bottom:8px;">88%</div>
+            <div style="width:100%; max-width:62px; height:204px; background:var(--p-gold); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 2</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-gold); margin-bottom:8px;">70%</div>
+            <div style="width:100%; max-width:62px; height:162px; background:var(--p-gold); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 3</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-faint); margin-bottom:8px;">48%</div>
+            <div style="width:100%; max-width:62px; height:112px; background:var(--p-accent); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 4</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-faint); margin-bottom:8px;">35%</div>
+            <div style="width:100%; max-width:62px; height:82px; background:var(--p-accent); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 5</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+            <div style="font-family:var(--p-head); font-weight:700; font-size:18px; color:var(--p-faint); margin-bottom:8px;">26%</div>
+            <div style="width:100%; max-width:62px; height:60px; background:var(--p-accent); border-radius:8px 8px 0 0;"></div>
+            <div style="font-family:var(--f-body); font-weight:600; font-size:15px; color:var(--p-ink-soft); margin-top:10px;">Wk 6+</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; margin-top:22px;">
+          <span style="width:16px; height:16px; border-radius:4px; background:var(--p-gold); flex:none;"></span>
+          <span style="font-family:var(--f-body); font-weight:500; font-size:19px; color:var(--p-ink-soft); line-height:1.4;">The first 2–3 weeks draw the most motivated buyers. Priced right, you sell into that peak — overpriced, you miss it and chase the market down.</span>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px;">
+        <div style="background:var(--p-card); border:1px solid var(--p-line); border-left:5px solid var(--p-green); border-radius:16px; padding:24px 28px;">
+          <div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:22px; color:var(--p-ink);">Priced right</div>
+          <div style="font-family:var(--f-body); font-weight:500; font-size:18px; color:var(--p-ink-soft); line-height:1.45; margin-top:6px;">Sells inside the window near <strong style="color:var(--p-green);">98% of list</strong> — fewer days, stronger offers.</div>
+        </div>
+        <div style="background:var(--p-card); border:1px solid var(--p-line); border-left:5px solid var(--p-red); border-radius:16px; padding:24px 28px;">
+          <div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:22px; color:var(--p-ink);">Overpriced, then reduced</div>
+          <div style="font-family:var(--f-body); font-weight:500; font-size:18px; color:var(--p-ink-soft); line-height:1.45; margin-top:6px;">Two or three price cuts later, sells near <strong style="color:var(--p-red);">91% of list</strong> — plus months of carrying cost.</div>
+        </div>
+        <div style="background:var(--p-band); border-radius:16px; padding:26px 28px; position:relative; overflow:hidden; margin-top:auto;">
+          <div style="font-family:var(--f-body); font-weight:700; font-size:18px; letter-spacing:.14em; text-transform:uppercase; color:var(--p-cover-eye);">The gap on a $400K home</div>
+          <div style="font-family:var(--p-head); font-weight:700; font-size:52px; color:#fff; line-height:1; margin-top:10px;">≈ $28,000</div>
+          <div style="font-family:var(--f-body); font-weight:500; font-size:17px; color:rgba(255,255,255,.82); line-height:1.45; margin-top:8px;">left on the table — before counting extra mortgage, taxes &amp; insurance while it sits.</div>
+          <div style="position:absolute; left:0; bottom:0; height:4px; width:100%; background:var(--p-gold);"></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:var(--f-body); font-weight:500; font-size:16px; color:var(--p-faint); margin-top:22px;">Illustrative of typical market behavior; actual figures vary by home and conditions.</div>
+  </section>
+
+  <!-- ═════════ 08 · OUR PROCESS ═════════ -->
+  <section data-label="Process" data-screen-label="08" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:22px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Your path to <b style="color:var(--p-accent); font-weight:700;">closing</b></div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0 0 56px; font-size:72px;">Six steps, <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">handled</em> for you.</h2>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:48px 70px;">
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">01</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Listing Agreement</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">We walk the paperwork together — no surprises, no fine print left unexplained.</div></div></div>
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">02</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Staging Consult</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">A walk-through to identify what to put away, rearrange, or enhance before photos.</div></div></div>
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">03</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Photography &amp; Video</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Professional shoot within days. You see proofs before anything goes live.</div></div></div>
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">04</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Go Live Everywhere</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">MLS, Zillow, Realtor.com, our site, email &amp; paid social — within 24 hours of approval.</div></div></div>
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">05</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Showings &amp; Offers</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">We schedule, follow up with every agent, and bring you offers with a clear recommendation.</div></div></div>
+      <div style="display:flex; gap:24px; align-items:flex-start;"><span style="font-family:var(--p-head); font-weight:700; font-size:46px; color:var(--p-gold); line-height:1; min-width:64px;">06</span><div><div style="font-family:var(--p-head); font-weight:600; text-transform:uppercase; font-size:27px; color:var(--p-ink);">Contract to Close</div><div style="font-family:var(--f-body); font-weight:500; font-size:20px; color:var(--p-ink-soft); line-height:1.5; margin-top:8px;">Inspection coordination, title work &amp; final walkthrough — we manage the details.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ═════════ TESTIMONIALS ═════════ -->
+  <section data-label="Reviews" data-screen-label="11" style="background:var(--p-surface); color:var(--p-ink); padding:72px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:32px;">
+      <div>
+        <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:20px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>What clients <b style="color:var(--p-accent); font-weight:700;">say</b></div>
+        <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-ink); margin:0; font-size:60px;">Sellers who <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">trusted</em> the plan.</h2>
+      </div>
+      <div style="text-align:right; flex:none;">
+        <div style="font-size:30px; color:var(--p-gold); letter-spacing:3px; line-height:1;">★★★★★</div>
+        <div style="font-family:var(--f-body); font-weight:600; font-size:16px; color:var(--p-ink-soft); margin-top:8px;">Rated 5.0 across 34+ Zillow reviews</div>
+      </div>
+    </div>
+    <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+        <div style="background:var(--p-card); border:1px solid var(--p-line); border-radius:18px; padding:30px 32px; display:flex; flex-direction:column; box-shadow:0 24px 44px -38px rgba(11,39,71,.5);">
+          <div style="font-family:var(--p-em-font); font-style:italic; font-weight:600; font-size:52px; line-height:.5; color:var(--p-gold); height:24px;">“</div>
+          <div style="font-family:var(--p-em-font); font-style:italic; font-weight:500; font-size:20px; line-height:1.45; color:var(--p-ink); margin-top:12px;">{{ r.q }}</div>
+          <div style="font-family:var(--f-body); font-weight:700; font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--p-accent); margin-top:auto; padding-top:18px;">{{ r.n }}</div>
+          <div style="font-family:var(--f-body); font-weight:500; font-size:14px; color:var(--p-faint); margin-top:3px;">{{ r.l }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ═════════ 09 · NEXT STEPS / CTA ═════════ -->
+  <section data-label="Next Steps" data-screen-label="09" style="background:var(--p-cover); color:var(--p-cover-ink); padding:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+    <div style="position:absolute; inset:42px; border:1px solid var(--p-frame); pointer-events:none;"></div>
+    <div style="font-family:var(--f-body); font-weight:700; font-size:24px; letter-spacing:.30em; text-transform:uppercase; color:var(--p-cover-eye); margin-bottom:30px;">Let's get started</div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:var(--p-cover-ink); margin:0; font-size:100px; max-width:18ch;">Let's get your home <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-em-color);">sold</em>.</h2>
+    <p style="font-family:var(--f-body); font-weight:500; font-size:30px; line-height:1.55; color:var(--p-cover-sub); margin:32px 0 0; max-width:40ch;">{{ closingLine }}</p>
+    <div style="margin-top:56px; padding-top:42px; border-top:1px solid rgba(255,255,255,.16); display:flex; flex-direction:column; align-items:center; gap:6px;">
+      <div style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:uppercase; font-size:54px; letter-spacing:.02em; color:var(--p-cover-ink); line-height:1;">The Bly Team</div>
+      <div style="font-family:var(--f-body); font-weight:600; font-size:21px; letter-spacing:.04em; text-transform:uppercase; color:var(--p-cover-eye); margin-top:14px;">{{ agentName }} &nbsp;·&nbsp; eXp Realty</div>
+      <div style="font-family:var(--f-body); font-weight:500; font-size:21px; color:var(--p-cover-sub);">{{ agentPhone }} &nbsp;·&nbsp; {{ agentEmail }}</div>
+    </div>
+    <div style="position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--p-gold);"></div>
+  </section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;scheme&quot;: {&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;navy&quot;,&quot;editorial&quot;,&quot;luxury&quot;],&quot;default&quot;:&quot;navy&quot;,&quot;tsType&quot;:&quot;'navy'|'editorial'|'luxury'&quot;},
+  &quot;clientName&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;propertyAddress&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2847 Harbor View Ln, League City, TX&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;recommendedLow&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;$435,000&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;recommendedHigh&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;$449,000&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;agentName&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Deborah Bly&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;agentPhone&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;(832) 932-5435&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;agentEmail&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;clientcare@agentbly.com&quot;,&quot;tsType&quot;:&quot;string&quot;},
+  &quot;presentedDate&quot;: {&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;June 2026&quot;,&quot;tsType&quot;:&quot;string&quot;}
+}">
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    const pool = [
+      { q: "Stephen and The Bly Team were outstanding selling our home — deeply knowledgeable about the local market, consistent, and smooth start to finish.", n: "Cassidi Esman", l: "Sold · Seabrook, TX" },
+      { q: "As a new-home sales counselor I work with a lot of realtors — the Deb Bly Team is the best. Always willing to go the extra mile.", n: "David Schmidt", l: "Sold · 2026" },
+      { q: "Deborah didn't just help me find my dream home — she became a dear friend. More than a realtor; a true advocate.", n: "Steph Wooten", l: "Bought & Sold · Tuscan Lakes" },
+      { q: "The most helpful, knowledgeable realtor — went above and beyond selling our house. Communication better than we'd ever had. 10/10.", n: "Summer B.", l: "Sold · w/ Meredith Heard" },
+      { q: "Chris did an outstanding job. He knew the area, was easy to work with, and kept us informed. I'd use him to sell or buy again.", n: "Tamara Gibson", l: "League City, TX" },
+      { q: "Extremely helpful and knowledgeable — asked all the right questions. Professional and easy to work with start to finish.", n: "Verified Client", l: "Bought & Sold · Weatherford" }
+    ];
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    this._reviews = pool.slice(0, 6);
+  }
+  _cfg() { try { return JSON.parse(localStorage.getItem('blyPresentation') || '{}'); } catch (e) { return {}; } }
+  _applyScheme() {
+    const c = this._cfg();
+    const s = c.scheme || this.props.scheme || 'navy';
+    if (typeof document !== 'undefined') document.documentElement.setAttribute('data-scheme', s);
+  }
+  componentDidMount() {
+    this._applyScheme();
+    this._onStore = () => { this._applyScheme(); this.forceUpdate(); };
+    window.addEventListener('storage', this._onStore);
+  }
+  componentWillUnmount() { if (this._onStore) window.removeEventListener('storage', this._onStore); }
+  componentDidUpdate() { this._applyScheme(); }
+  renderVals() {
+    const p = this.props;
+    const c = this._cfg();
+    const pick = (k, d) => (c[k] != null && c[k] !== '') ? c[k] : (p[k] ?? d);
+    return {
+      reviews: this._reviews,
+      bio: (c.agentBio && c.agentBio.trim()) ? c.agentBio : ('Led by ' + ((c.agentName != null && c.agentName !== '') ? c.agentName : (p.agentName ?? 'Deborah Bly')) + ', The Bly Team works League City, Friendswood, Galveston County and the greater Bay Area every day — backed by an ISA team, a shared CRM, and a marketing system built to move homes.'),
+      agentPhoto: pick('agentPhoto', ''), hasPhoto: !!c.agentPhoto, noPhoto: !c.agentPhoto,
+      clientName: pick('clientName', ''),
+      hasClient: !!pick('clientName', ''),
+      closingLine: pick('clientName', '')
+        ? ("When you're ready, " + pick('clientName', '') + " — we'll put this plan to work for your home.")
+        : ("When you're ready, we'll put this plan to work for your home."),
+      agentName: pick('agentName', 'Deborah Bly'),
+      agentPhone: pick('agentPhone', '(832) 932-5435'),
+      agentEmail: pick('agentEmail', 'clientcare@agentbly.com'),
+      presentedDate: pick('presentedDate', 'June 2026')
+    };
+  }
+}
+</script>
+</body>
+</html>
