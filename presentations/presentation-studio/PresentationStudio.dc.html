@@ -52,7 +52,7 @@
       <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:18px 22px; margin-bottom:16px;">
         <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
           <label style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:18px; color:var(--ink); white-space:nowrap;">Claude API key</label>
-          <span style="font-size:13.5px; color:var(--ink-soft); line-height:1.5;">— optional. Add it to pull comps from any CMA format with AI. Stored only in this browser session, never uploaded with your deck.</span>
+          <span style="font-size:13.5px; color:var(--ink-soft); line-height:1.5;">— powers all AI features (comp extraction, price range, bio). Saved on this device only — never committed to the repo or uploaded with your deck.</span>
         </div>
         <input type="password" value="{{ claudeKey }}" onInput="{{ onKey }}" autocomplete="off" placeholder="sk-ant-…" style="width:100%; margin-top:12px; padding:12px 14px; border:1.5px solid var(--field-line); border-radius:10px; font-size:15px; color:var(--ink); background:#fff; outline:none; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
         <sc-if value="{{ apiKeyStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:10px;">{{ apiKeyStatus }}</div></sc-if>
@@ -160,8 +160,12 @@
       </div>
 
       <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
-        <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">Agent bio <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, shows on “Meet the team”</span></label>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:7px;">
+          <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);">Agent bio <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, shows on “Meet the team”</span></label>
+          <button type="button" onClick="{{ aiBio }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
+        </div>
         <textarea data-k="agentBio" value="{{ agentBio }}" onInput="{{ onField }}" rows="3" placeholder="A short bio in your voice — experience, local roots, how you serve clients." style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; line-height:1.5; color:var(--ink); background:#fff; outline:none; resize:vertical; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);"></textarea>
+        <sc-if value="{{ bioStatus }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--royal); font-weight:600; margin-top:8px;">{{ bioStatus }}</div></sc-if>
       </div>
 
       <sc-if value="{{ showProperty }}" hint-placeholder-val="{{ true }}">
@@ -178,6 +182,10 @@
             <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:7px;">List range — high</label>
             <input data-k="recommendedHigh" value="{{ recommendedHigh }}" onInput="{{ onField }}" placeholder="$449,000" style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
           </div>
+        </div>
+        <div style="margin-top:14px; display:flex; align-items:center; gap:13px; flex-wrap:wrap;">
+          <button type="button" onClick="{{ aiPrice }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:9px 16px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Suggest range with AI</button>
+          <sc-if value="{{ priceStatus }}" hint-placeholder-val=""><span style="font-size:13px; color:var(--royal); font-weight:600; line-height:1.5;">{{ priceStatus }}</span></sc-if>
         </div>
       </sc-if>
     </section>
@@ -264,16 +272,52 @@ class Component extends DCLogic {
       skipComps: !!saved.skipComps,
       cmaStatus: '',
       realistStatus: '',
-      claudeKey: (function () { try { return sessionStorage.getItem('blyClaudeKey') || ''; } catch (e) { return ''; } })(),
-      apiKeyStatus: ''
+      claudeKey: (function () { try { return localStorage.getItem('blyClaudeKey') || ''; } catch (e) { return ''; } })(),
+      apiKeyStatus: '',
+      priceStatus: '',
+      bioStatus: ''
     };
     this.onType = (e) => this.setState({ type: e.currentTarget.dataset.id });
     this.onScheme = (e) => this.setState({ scheme: e.currentTarget.dataset.id });
     this.onField = (e) => this.setState({ [e.target.dataset.k]: e.target.value });
     this.onKey = (e) => {
       const v = e.target.value;
-      try { sessionStorage.setItem('blyClaudeKey', v); } catch (err) {}
-      this.setState({ claudeKey: v, apiKeyStatus: v.trim() ? '✓ Key set — CMA uploads will use AI extraction.' : '' });
+      try { if (v.trim()) localStorage.setItem('blyClaudeKey', v); else localStorage.removeItem('blyClaudeKey'); } catch (err) {}
+      this.setState({ claudeKey: v, apiKeyStatus: v.trim() ? '✓ Key saved on this device — AI features are on.' : '' });
+    };
+    this.aiPrice = async () => {
+      if (!(this.state.claudeKey || '').trim()) { this.setState({ priceStatus: 'Add your Claude API key above first.' }); return; }
+      const comps = (this.state.comps || []).filter((c) => (c.address || '').trim() || (c.sold || '').trim());
+      if (!comps.length) { this.setState({ priceStatus: 'Add or import some comps first.' }); return; }
+      this.setState({ priceStatus: 'Asking Claude for a price range …' });
+      try {
+        const schema = { type: 'object', properties: { low: { type: 'string' }, high: { type: 'string' }, rationale: { type: 'string' } }, required: ['low', 'high', 'rationale'], additionalProperties: false };
+        const prompt = 'You are a listing agent pricing a home. Subject property: ' + (this.state.propertyAddress || '(address not provided)') + '. ' +
+          'Based on these comparable sales, recommend a list-price RANGE for the subject. ' +
+          'Return low and high as formatted strings like "$435,000", and rationale as one or two plain sentences explaining the range. ' +
+          'Comparable sales (JSON): ' + JSON.stringify(comps);
+        const r = await this._claude(prompt, schema, 700);
+        this.setState({ recommendedLow: r.low || this.state.recommendedLow, recommendedHigh: r.high || this.state.recommendedHigh, priceStatus: '✓ ' + (r.rationale || 'Range suggested — edit the fields if you like.') });
+      } catch (err) {
+        this.setState({ priceStatus: 'Could not get a suggestion (' + (err.message || 'error') + ').' });
+      }
+    };
+    this.aiBio = async () => {
+      if (!(this.state.claudeKey || '').trim()) { this.setState({ bioStatus: 'Add your Claude API key above first.' }); return; }
+      this.setState({ bioStatus: 'Writing a bio with Claude …' });
+      try {
+        const existing = (this.state.agentBio || '').trim();
+        const prompt = 'Write a warm, professional real-estate agent bio for a client presentation, in The Bly Team brand voice ' +
+          '(trustworthy and professional, warm and inclusive, modern and aspirational; third person; no emoji; roughly 45-65 words). ' +
+          'Agent name: ' + (this.state.agentName || 'the agent') + '. Team: The Bly Team at eXp Realty, serving League City and Houston, TX. ' +
+          (existing ? 'Build on these notes from the agent and keep any real facts they mention: "' + existing + '". ' : 'No notes were provided, so keep it general and do NOT invent specific awards, sales figures, years of experience, or personal details. ') +
+          'Return only the bio text — no preamble, no quotation marks, no markdown.';
+        const txt = await this._claude(prompt, null, 400);
+        if (txt) this.setState({ agentBio: txt, bioStatus: '✓ Draft written — edit it to make it yours.' });
+        else this.setState({ bioStatus: 'No text came back — try again.' });
+      } catch (err) {
+        this.setState({ bioStatus: 'Could not write a bio (' + (err.message || 'error') + ').' });
+      }
     };
     this.onComp = (e) => {
       const i = +e.target.dataset.i, k = e.target.dataset.k, v = e.target.value;
@@ -444,9 +488,42 @@ class Component extends DCLogic {
     }
     return out;
   }
-  async _aiExtractComps(text) {
+  async _claude(prompt, schema, maxTokens) {
     const key = (this.state.claudeKey || '').trim();
-    if (!key) return null;
+    if (!key) throw new Error('no API key');
+    const body = {
+      model: 'claude-opus-4-8',
+      max_tokens: maxTokens || 1024,
+      messages: [{ role: 'user', content: prompt }]
+    };
+    if (schema) body.output_config = { format: { type: 'json_schema', schema: schema } };
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      let msg = '';
+      try { const e = await res.json(); msg = (e.error && e.error.message) || ''; } catch (_) {}
+      throw new Error(res.status + (msg ? ': ' + msg : ''));
+    }
+    const data = await res.json();
+    const txt = (data.content || []).filter(function (b) { return b.type === 'text'; }).map(function (b) { return b.text; }).join('').trim();
+    if (!schema) return txt;
+    try { return JSON.parse(txt); }
+    catch (_) {
+      const a = txt.indexOf('{'), b = txt.lastIndexOf('}');
+      if (a === -1 || b === -1) throw new Error('unexpected response');
+      return JSON.parse(txt.slice(a, b + 1));
+    }
+  }
+  async _aiExtractComps(text) {
+    if (!(this.state.claudeKey || '').trim()) return null;
     const schema = {
       type: 'object',
       properties: {
@@ -477,35 +554,7 @@ class Component extends DCLogic {
       'dom = days on market like "14". Use an empty string for any field you cannot find. ' +
       'Include only sold/closed comps — skip the subject property, active or pending listings, and any summary/average/median rows.\n\nREPORT:\n' +
       String(text).slice(0, 60000);
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-8',
-        max_tokens: 4096,
-        output_config: { format: { type: 'json_schema', schema: schema } },
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    if (!res.ok) {
-      let msg = '';
-      try { const e = await res.json(); msg = (e.error && e.error.message) || ''; } catch (_) {}
-      throw new Error(res.status + (msg ? ': ' + msg : ''));
-    }
-    const data = await res.json();
-    const txt = (data.content || []).filter(function (b) { return b.type === 'text'; }).map(function (b) { return b.text; }).join('').trim();
-    let obj;
-    try { obj = JSON.parse(txt); }
-    catch (_) {
-      const a = txt.indexOf('{'), b = txt.lastIndexOf('}');
-      if (a === -1 || b === -1) throw new Error('unexpected response');
-      obj = JSON.parse(txt.slice(a, b + 1));
-    }
+    const obj = await this._claude(prompt, schema, 4096);
     const arr = (obj && obj.comps) || [];
     return arr.map(function (c) {
       return {
@@ -534,12 +583,12 @@ class Component extends DCLogic {
       showProperty, showComps: showProperty,
       typeName: tn ? tn.name : '',
       comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
-      claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus,
+      claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus, priceStatus: this.state.priceStatus, bioStatus: this.state.bioStatus,
       clientName: this.state.clientName, agentName: this.state.agentName,
       agentPhone: this.state.agentPhone, agentEmail: this.state.agentEmail, agentBio: this.state.agentBio, agentPhoto: this.state.agentPhoto, hasPhoto: !!this.state.agentPhoto, headshotStatus: this.state.headshotStatus, agentInfoStatus: this.state.agentInfoStatus,
       presentedDate: this.state.presentedDate, propertyAddress: this.state.propertyAddress,
       recommendedLow: this.state.recommendedLow, recommendedHigh: this.state.recommendedHigh,
-      onType: this.onType, onScheme: this.onScheme, onField: this.onField, onKey: this.onKey,
+      onType: this.onType, onScheme: this.onScheme, onField: this.onField, onKey: this.onKey, aiPrice: this.aiPrice, aiBio: this.aiBio,
       onCMA: this.onCMA, onRealist: this.onRealist, onHeadshot: this.onHeadshot, onAgentInfo: this.onAgentInfo, toggleSkip: this.toggleSkip, onComp: this.onComp, addComp: this.addComp, removeComp: this.removeComp, open: this.open
     };
   }
