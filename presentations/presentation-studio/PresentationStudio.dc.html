@@ -49,6 +49,14 @@
     <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
       <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:10px;"><span style="width:20px; height:2px; background:var(--gold);"></span>Import data <span style="color:var(--ink-faint); font-weight:600; letter-spacing:.04em;">— optional</span></div>
       <p style="font-size:16px; line-height:1.55; color:var(--ink-soft); font-weight:500; margin:0 0 22px; max-width:70ch;">Upload what you already have and we’ll auto-fill the intake form below — then review &amp; adjust anything before you open the deck.</p>
+      <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:18px 22px; margin-bottom:16px;">
+        <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
+          <label style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:18px; color:var(--ink); white-space:nowrap;">Claude API key</label>
+          <span style="font-size:13.5px; color:var(--ink-soft); line-height:1.5;">— optional. Add it to pull comps from any CMA format with AI. Stored only in this browser session, never uploaded with your deck.</span>
+        </div>
+        <input type="password" value="{{ claudeKey }}" onInput="{{ onKey }}" autocomplete="off" placeholder="sk-ant-…" style="width:100%; margin-top:12px; padding:12px 14px; border:1.5px solid var(--field-line); border-radius:10px; font-size:15px; color:var(--ink); background:#fff; outline:none; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+        <sc-if value="{{ apiKeyStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:10px;">{{ apiKeyStatus }}</div></sc-if>
+      </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column;">
           <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:19px; color:var(--ink);">Agent headshot</div>
@@ -255,11 +263,18 @@ class Component extends DCLogic {
       comps: (Array.isArray(saved.comps) && saved.comps.length) ? saved.comps : defComps,
       skipComps: !!saved.skipComps,
       cmaStatus: '',
-      realistStatus: ''
+      realistStatus: '',
+      claudeKey: (function () { try { return sessionStorage.getItem('blyClaudeKey') || ''; } catch (e) { return ''; } })(),
+      apiKeyStatus: ''
     };
     this.onType = (e) => this.setState({ type: e.currentTarget.dataset.id });
     this.onScheme = (e) => this.setState({ scheme: e.currentTarget.dataset.id });
     this.onField = (e) => this.setState({ [e.target.dataset.k]: e.target.value });
+    this.onKey = (e) => {
+      const v = e.target.value;
+      try { sessionStorage.setItem('blyClaudeKey', v); } catch (err) {}
+      this.setState({ claudeKey: v, apiKeyStatus: v.trim() ? '✓ Key set — CMA uploads will use AI extraction.' : '' });
+    };
     this.onComp = (e) => {
       const i = +e.target.dataset.i, k = e.target.dataset.k, v = e.target.value;
       this.setState({ comps: this.state.comps.map((c, idx) => idx === i ? Object.assign({}, c, { [k]: v }) : c) });
@@ -278,12 +293,26 @@ class Component extends DCLogic {
         const mod = await import('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf-parse.es.js');
         mod.PDFParse.setWorker('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf.worker.min.mjs');
         const parser = new mod.PDFParse({ data: new Uint8Array(await file.arrayBuffer()) });
-        const res = await parser.getText();
-        const found = this._parseCMA(res.text || '');
+        const text = (await parser.getText()).text || '';
+        const useAI = !!(this.state.claudeKey || '').trim();
+        if (useAI) {
+          this.setState({ cmaStatus: 'Extracting comps with Claude — this can take a few seconds …' });
+          try {
+            const ai = await this._aiExtractComps(text);
+            if (ai && ai.length) {
+              this.setState({ comps: ai, skipComps: false, cmaStatus: '✓ Claude pulled ' + ai.length + ' comps from ' + file.name + '. Review & edit below.' });
+              return;
+            }
+            // AI ran but found nothing — fall through to the built-in reader
+          } catch (aiErr) {
+            this.setState({ cmaStatus: 'AI extraction failed (' + (aiErr.message || 'error') + ') — trying the built-in reader …' });
+          }
+        }
+        const found = this._parseCMA(text);
         if (found.length) {
           this.setState({ comps: found, skipComps: false, cmaStatus: '✓ Imported ' + found.length + ' comps from ' + file.name + '. Review & edit below.' });
         } else {
-          this.setState({ cmaStatus: 'Couldn’t read comps from ' + file.name + ' automatically (it may be image-only). Enter them below, or present live.' });
+          this.setState({ cmaStatus: 'Couldn’t read comps from ' + file.name + ' automatically (it may be image-only). ' + (useAI ? 'Enter them below, or present live.' : 'Add a Claude API key above for AI extraction, or enter them below.') });
         }
       } catch (err) {
         this.setState({ cmaStatus: 'Could not read that file. Enter comps below, or present comps live.' });
@@ -347,7 +376,11 @@ class Component extends DCLogic {
       } catch (err) { this.setState({ agentInfoStatus: 'Could not read that file.' }); }
     };
     this.open = () => {
-      try { localStorage.setItem('blyPresentation', JSON.stringify(this.state)); } catch (e) {}
+      try {
+        const save = Object.assign({}, this.state);
+        delete save.claudeKey; delete save.apiKeyStatus; // key stays in this browser session only
+        localStorage.setItem('blyPresentation', JSON.stringify(save));
+      } catch (e) {}
       const paths = {
         buyer: '../buyer-presentation/BuyerPresentation.dc.html',
         prelisting: '../pre-listing-presentation/PreListingPresentation.dc.html',
@@ -411,6 +444,79 @@ class Component extends DCLogic {
     }
     return out;
   }
+  async _aiExtractComps(text) {
+    const key = (this.state.claudeKey || '').trim();
+    if (!key) return null;
+    const schema = {
+      type: 'object',
+      properties: {
+        comps: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              address: { type: 'string' },
+              sold: { type: 'string' },
+              sqft: { type: 'string' },
+              psf: { type: 'string' },
+              dom: { type: 'string' }
+            },
+            required: ['address', 'sold', 'sqft', 'psf', 'dom'],
+            additionalProperties: false
+          }
+        }
+      },
+      required: ['comps'],
+      additionalProperties: false
+    };
+    const prompt = 'Extract every comparable SOLD property from this CMA / MLS / county report. ' +
+      'For each comp: address = street address only (no city, state, or zip); ' +
+      'sold = sold or closed price formatted like "$418K"; ' +
+      'sqft = living area like "2,620"; ' +
+      'psf = price per square foot like "$160" (compute sold ÷ sqft and round if it is not stated); ' +
+      'dom = days on market like "14". Use an empty string for any field you cannot find. ' +
+      'Include only sold/closed comps — skip the subject property, active or pending listings, and any summary/average/median rows.\n\nREPORT:\n' +
+      String(text).slice(0, 60000);
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-8',
+        max_tokens: 4096,
+        output_config: { format: { type: 'json_schema', schema: schema } },
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!res.ok) {
+      let msg = '';
+      try { const e = await res.json(); msg = (e.error && e.error.message) || ''; } catch (_) {}
+      throw new Error(res.status + (msg ? ': ' + msg : ''));
+    }
+    const data = await res.json();
+    const txt = (data.content || []).filter(function (b) { return b.type === 'text'; }).map(function (b) { return b.text; }).join('').trim();
+    let obj;
+    try { obj = JSON.parse(txt); }
+    catch (_) {
+      const a = txt.indexOf('{'), b = txt.lastIndexOf('}');
+      if (a === -1 || b === -1) throw new Error('unexpected response');
+      obj = JSON.parse(txt.slice(a, b + 1));
+    }
+    const arr = (obj && obj.comps) || [];
+    return arr.map(function (c) {
+      return {
+        address: String(c.address || '').trim(),
+        sold: String(c.sold || '').trim(),
+        sqft: String(c.sqft || '').trim(),
+        psf: String(c.psf || '').trim(),
+        dom: String(c.dom || '').trim()
+      };
+    }).filter(function (c) { return c.address; });
+  }
   renderVals() {
     const T = this.state.type, S = this.state.scheme;
     const typeMeta = [
@@ -428,11 +534,12 @@ class Component extends DCLogic {
       showProperty, showComps: showProperty,
       typeName: tn ? tn.name : '',
       comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
+      claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus,
       clientName: this.state.clientName, agentName: this.state.agentName,
       agentPhone: this.state.agentPhone, agentEmail: this.state.agentEmail, agentBio: this.state.agentBio, agentPhoto: this.state.agentPhoto, hasPhoto: !!this.state.agentPhoto, headshotStatus: this.state.headshotStatus, agentInfoStatus: this.state.agentInfoStatus,
       presentedDate: this.state.presentedDate, propertyAddress: this.state.propertyAddress,
       recommendedLow: this.state.recommendedLow, recommendedHigh: this.state.recommendedHigh,
-      onType: this.onType, onScheme: this.onScheme, onField: this.onField,
+      onType: this.onType, onScheme: this.onScheme, onField: this.onField, onKey: this.onKey,
       onCMA: this.onCMA, onRealist: this.onRealist, onHeadshot: this.onHeadshot, onAgentInfo: this.onAgentInfo, toggleSkip: this.toggleSkip, onComp: this.onComp, addComp: this.addComp, removeComp: this.removeComp, open: this.open
     };
   }
