@@ -308,6 +308,18 @@
     <div style="font-family:var(--f-body); font-weight:500; font-size:16px; color:var(--p-faint); margin-top:22px;">Illustrative of typical market behavior; actual figures vary by home and conditions.</div>
   </section>
 
+  <!-- ═════════ MARKET NARRATIVE ═════════ -->
+  <sc-if value="{{ hasMarketNarrative }}" hint-placeholder-val="{{ true }}">
+  <section data-label="The Market" data-screen-label="07" style="background:var(--p-band); color:#fff; padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:rgba(255,255,255,.62); display:flex; align-items:center; gap:14px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>The market</div>
+      <img src="../../assets/bly-logo-white.png" alt="" style="height:40px; opacity:.9;">
+    </div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:#fff; margin:0 0 36px; font-size:58px; max-width:20ch;">Where things <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-gold);">stand</em>.</h2>
+    <div style="margin-top:auto; font-family:var(--f-body); font-weight:500; font-size:30px; line-height:1.6; color:rgba(255,255,255,.92); max-width:64ch;">{{ marketNarrative }}</div>
+  </section>
+  </sc-if>
+
   <!-- ═════════ 08 · OUR PROCESS ═════════ -->
   <section data-label="Process" data-screen-label="08" style="background:var(--p-surface); color:var(--p-ink); padding:96px 120px; display:flex; flex-direction:column;">
     <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:var(--p-faint); display:flex; align-items:center; gap:14px; margin-bottom:22px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>Your path to <b style="color:var(--p-accent); font-weight:700;">closing</b></div>
@@ -416,6 +428,8 @@ class Component extends DCLogic {
       agentName: pick('agentName', 'Deborah Bly'),
       agentPhone: pick('agentPhone', '(832) 932-5435'),
       agentEmail: pick('agentEmail', 'clientcare@agentbly.com'),
+      marketNarrative: pick('marketNarrative', ''),
+      hasMarketNarrative: !!(c.marketNarrative && String(c.marketNarrative).trim()),
       presentedDate: pick('presentedDate', 'June 2026')
     };
   }

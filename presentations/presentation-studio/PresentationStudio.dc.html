@@ -201,6 +201,17 @@
         <sc-if value="{{ bioStatus }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--royal); font-weight:600; margin-top:8px;">{{ bioStatus }}</div></sc-if>
       </div>
 
+      <sc-if value="{{ showNarrative }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:7px;">
+          <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);">Market narrative <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, adds a market-summary slide</span></label>
+          <button type="button" onClick="{{ aiNarrative }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
+        </div>
+        <textarea data-k="marketNarrative" value="{{ marketNarrative }}" onInput="{{ onField }}" rows="3" placeholder="A short take on the local market — what it means for pricing and timing." style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; line-height:1.5; color:var(--ink); background:#fff; outline:none; resize:vertical; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);"></textarea>
+        <sc-if value="{{ narrativeStatus }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--royal); font-weight:600; margin-top:8px;">{{ narrativeStatus }}</div></sc-if>
+      </div>
+      </sc-if>
+
       <sc-if value="{{ showProperty }}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line); display:grid; grid-template-columns:2fr 1fr 1fr; gap:20px 24px;">
           <div>
@@ -360,6 +371,23 @@ class Component extends DCLogic {
         else this.setState({ bioStatus: 'No text came back — try again.' });
       } catch (err) {
         this.setState({ bioStatus: 'Could not write a bio (' + (err.message || 'error') + ').' });
+      }
+    };
+    this.aiNarrative = async () => {
+      if (!this._aiReady()) { this.setState({ narrativeStatus: 'Add your Claude API key above first.' }); return; }
+      this.setState({ narrativeStatus: 'Writing a market summary with Claude …' });
+      try {
+        const comps = (this.state.comps || []).filter((c) => (c.address || '').trim() || (c.sold || '').trim());
+        const prompt = 'Write a short market-summary paragraph for a real-estate listing presentation, in The Bly Team brand voice ' +
+          '(trustworthy, warm, modern; frame meaning before facts; speak to "you"; plain language; no emoji; 55-80 words). ' +
+          'Area: League City, Houston and the Texas Gulf Coast' + (this.state.propertyAddress ? ' (subject property: ' + this.state.propertyAddress + ')' : '') + '. ' +
+          (comps.length ? 'Recent comparable sales (JSON): ' + JSON.stringify(comps) + '. Ground the summary in what these comps imply about pricing, demand, and time on market — but do not list them out. ' : 'No comps were provided, so keep it general about the local market and why presentation, pricing, and follow-up matter right now. ') +
+          'End with one clear, confident takeaway. Return only the paragraph — no preamble, no heading, no quotation marks.';
+        const txt = await this._claude(prompt, null, 500);
+        if (txt) this.setState({ marketNarrative: txt, narrativeStatus: '✓ Draft written — edit it to make it yours.' });
+        else this.setState({ narrativeStatus: 'No text came back — try again.' });
+      } catch (err) {
+        this.setState({ narrativeStatus: 'Could not write a summary (' + (err.message || 'error') + ').' });
       }
     };
     this.onPresName = (e) => this.setState({ presName: e.target.value });
@@ -711,6 +739,7 @@ class Component extends DCLogic {
       comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
       claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus, priceStatus: this.state.priceStatus, bioStatus: this.state.bioStatus,
       showKeyField: !(AI_PROXY_URL && AI_PROXY_URL.trim()),
+      marketNarrative: this.state.marketNarrative, narrativeStatus: this.state.narrativeStatus, showNarrative: T !== 'buyer',
       presName: this.state.presName, libStatus: this.state.libStatus,
       hasSaved: this.state.savedList.length > 0, noSaved: this.state.savedList.length === 0,
       savedList: this.state.savedList.map(function (p) {
@@ -724,7 +753,7 @@ class Component extends DCLogic {
       presentedDate: this.state.presentedDate, propertyAddress: this.state.propertyAddress,
       recommendedLow: this.state.recommendedLow, recommendedHigh: this.state.recommendedHigh,
       onType: this.onType, onScheme: this.onScheme, onField: this.onField, onKey: this.onKey, aiPrice: this.aiPrice, aiBio: this.aiBio,
-      onPresName: this.onPresName, savePres: this.savePres, newPres: this.newPres, openPres: this.openPres, dupPres: this.dupPres, delPres: this.delPres,
+      onPresName: this.onPresName, savePres: this.savePres, newPres: this.newPres, openPres: this.openPres, dupPres: this.dupPres, delPres: this.delPres, aiNarrative: this.aiNarrative,
       onCMA: this.onCMA, onRealist: this.onRealist, onHeadshot: this.onHeadshot, onAgentInfo: this.onAgentInfo, toggleSkip: this.toggleSkip, onComp: this.onComp, addComp: this.addComp, removeComp: this.removeComp, open: this.open
     };
   }

@@ -352,6 +352,18 @@
     </div>
   </section>
 
+  <!-- ═════════ MARKET NARRATIVE ═════════ -->
+  <sc-if value="{{ hasMarketNarrative }}" hint-placeholder-val="{{ true }}">
+  <section data-label="The Market" data-screen-label="07" style="background:var(--p-band); color:#fff; padding:96px 120px; display:flex; flex-direction:column;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+      <div style="font-family:var(--f-body); font-weight:700; font-size:26px; letter-spacing:var(--p-label-ls); text-transform:uppercase; color:rgba(255,255,255,.62); display:flex; align-items:center; gap:14px;"><span style="width:28px; height:2px; background:var(--p-gold);"></span>The market</div>
+      <img src="../../assets/bly-logo-white.png" alt="" style="height:40px; opacity:.9;">
+    </div>
+    <h2 style="font-family:var(--p-head); font-weight:var(--p-head-w); text-transform:var(--p-head-tt); line-height:var(--p-head-lh); letter-spacing:var(--p-head-ls); color:#fff; margin:0 0 36px; font-size:58px; max-width:20ch;">Where things <em style="font-family:var(--p-em-font); font-style:italic; font-weight:var(--p-em-w); text-transform:none; color:var(--p-gold);">stand</em>.</h2>
+    <div style="margin-top:auto; font-family:var(--f-body); font-weight:500; font-size:30px; line-height:1.6; color:rgba(255,255,255,.92); max-width:64ch;">{{ marketNarrative }}</div>
+  </section>
+  </sc-if>
+
   <!-- ═════════ OFFERS & NET ═════════ -->
   <section data-label="Offers &amp; Net" data-screen-label="08" style="background:var(--p-surface); color:var(--p-ink); padding:84px 120px; display:flex; gap:64px;">
     <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
@@ -494,6 +506,8 @@ class Component extends DCLogic {
       clientName, propertyAddress, hasClient: !!clientName, closingLine,
       recommendedLow: pick('recommendedLow', '$435,000'),
       recommendedHigh: pick('recommendedHigh', '$449,000'),
+      marketNarrative: pick('marketNarrative', ''),
+      hasMarketNarrative: !!(c.marketNarrative && String(c.marketNarrative).trim()),
       agentName: pick('agentName', 'Deborah Bly'),
       agentPhone: pick('agentPhone', '(832) 932-5435'),
       agentEmail: pick('agentEmail', 'clientcare@agentbly.com'),
