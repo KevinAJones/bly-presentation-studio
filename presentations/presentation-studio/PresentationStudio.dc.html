@@ -29,6 +29,37 @@
     <h1 style="font-family:var(--f-display); font-weight:700; text-transform:uppercase; font-size:48px; line-height:1.04; letter-spacing:.005em; margin:0 0 12px; color:var(--ink);">Build a client <em style="font-family:var(--f-serif); font-style:italic; text-transform:none; color:var(--royal-bright); font-weight:600;">presentation</em></h1>
     <p style="font-size:18px; line-height:1.6; color:var(--ink-soft); font-weight:500; max-width:64ch; margin:0 0 36px;">Pick a presentation, choose a look, drop in your details — then open it to present live or save as a PDF. Everything stays in The Bly Team brand.</p>
 
+    <!-- MY PRESENTATIONS -->
+    <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px;">
+        <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px;"><span style="width:20px; height:2px; background:var(--gold);"></span>My presentations</div>
+        <button type="button" onClick="{{ newPres }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:14px; color:var(--royal); background:#fff; border:1.5px solid var(--line-strong); padding:10px 18px; border-radius:10px;" style-hover="border-color:var(--royal);">+ New</button>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px;">
+        <input value="{{ presName }}" onInput="{{ onPresName }}" placeholder="Name this presentation — e.g. Jerry &amp; Cynthia Mauck" style="flex:1; min-width:240px; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; color:var(--ink); background:#fff; outline:none;" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
+        <button type="button" onClick="{{ savePres }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:15px; color:#fff; background:linear-gradient(135deg, var(--royal), var(--royal-bright)); border:0; padding:13px 26px; border-radius:10px;" style-hover="filter:brightness(1.07);">Save</button>
+      </div>
+      <sc-if value="{{ libStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin:0 0 14px;">{{ libStatus }}</div></sc-if>
+      <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ savedList }}" as="p" hint-placeholder-count="2">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:13px 16px; border:1px solid var(--line); border-radius:12px; margin-bottom:9px; background:var(--panel-2);">
+            <div style="min-width:0;">
+              <div style="font-family:var(--f-body); font-weight:700; font-size:16px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ p.name }}</div>
+              <div style="font-size:13px; color:var(--ink-faint); margin-top:2px;">{{ p.meta }}</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-shrink:0;">
+              <button type="button" data-id="{{ p.id }}" onClick="{{ openPres }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13.5px; color:var(--royal); background:#fff; border:1.5px solid var(--line-strong); padding:9px 16px; border-radius:9px;" style-hover="border-color:var(--royal);">Open</button>
+              <button type="button" data-id="{{ p.id }}" onClick="{{ dupPres }}" title="Duplicate" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13.5px; color:var(--ink-soft); background:#fff; border:1.5px solid var(--line-strong); padding:9px 14px; border-radius:9px;" style-hover="border-color:var(--royal); color:var(--royal);">Duplicate</button>
+              <button type="button" data-id="{{ p.id }}" onClick="{{ delPres }}" title="Delete" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13.5px; color:var(--ink-faint); background:#fff; border:1.5px solid var(--line-strong); padding:9px 12px; border-radius:9px;" style-hover="border-color:var(--red); color:var(--red);">Delete</button>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ noSaved }}" hint-placeholder-val="">
+        <div style="background:var(--panel-2); border:1px dashed var(--line-strong); border-radius:12px; padding:22px 24px; font-size:15px; color:var(--ink-soft); line-height:1.55;">No saved presentations yet. Fill in the details below, name it, and hit <b style="color:var(--ink);">Save</b> — or just open a deck and it’ll be saved here automatically.</div>
+      </sc-if>
+    </section>
+
     <!-- STEP 1 · PRESENTATION -->
     <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
       <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:22px;"><span style="width:20px; height:2px; background:var(--gold);"></span><b style="color:var(--royal); font-weight:700;">1</b> &nbsp;Choose a presentation</div>
@@ -49,6 +80,7 @@
     <section style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:34px 36px; margin-bottom:24px; box-shadow:0 1px 0 rgba(11,39,71,.03), 0 30px 60px -48px rgba(11,39,71,.5);">
       <div style="font-family:var(--f-body); font-weight:700; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:11px; margin-bottom:10px;"><span style="width:20px; height:2px; background:var(--gold);"></span>Import data <span style="color:var(--ink-faint); font-weight:600; letter-spacing:.04em;">— optional</span></div>
       <p style="font-size:16px; line-height:1.55; color:var(--ink-soft); font-weight:500; margin:0 0 22px; max-width:70ch;">Upload what you already have and we’ll auto-fill the intake form below — then review &amp; adjust anything before you open the deck.</p>
+      <sc-if value="{{ showKeyField }}" hint-placeholder-val="{{ true }}">
       <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:18px 22px; margin-bottom:16px;">
         <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
           <label style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:18px; color:var(--ink); white-space:nowrap;">Claude API key</label>
@@ -57,6 +89,7 @@
         <input type="password" value="{{ claudeKey }}" onInput="{{ onKey }}" autocomplete="off" placeholder="sk-ant-…" style="width:100%; margin-top:12px; padding:12px 14px; border:1.5px solid var(--field-line); border-radius:10px; font-size:15px; color:var(--ink); background:#fff; outline:none; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);">
         <sc-if value="{{ apiKeyStatus }}" hint-placeholder-val=""><div style="font-size:13.5px; color:var(--royal); font-weight:600; margin-top:10px;">{{ apiKeyStatus }}</div></sc-if>
       </div>
+      </sc-if>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column;">
           <div style="font-family:var(--f-display); font-weight:600; text-transform:uppercase; font-size:19px; color:var(--ink);">Agent headshot</div>
@@ -242,6 +275,10 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// Shared team AI proxy (Cloudflare Worker). When set, the Studio sends AI calls
+// here and no API key is needed in the browser. Leave '' to fall back to a
+// per-agent key entered in the form. See proxy/ai-proxy.worker.js to deploy.
+const AI_PROXY_URL = '';
 class Component extends DCLogic {
   constructor(...a) {
     super(...a);
@@ -275,7 +312,13 @@ class Component extends DCLogic {
       claudeKey: (function () { try { return localStorage.getItem('blyClaudeKey') || ''; } catch (e) { return ''; } })(),
       apiKeyStatus: '',
       priceStatus: '',
-      bioStatus: ''
+      bioStatus: '',
+      marketNarrative: saved.marketNarrative || '',
+      narrativeStatus: '',
+      presName: saved.presName || '',
+      currentId: saved.currentId || '',
+      libStatus: '',
+      savedList: (function () { try { return JSON.parse(localStorage.getItem('blyPresentations') || '[]'); } catch (e) { return []; } })()
     };
     this.onType = (e) => this.setState({ type: e.currentTarget.dataset.id });
     this.onScheme = (e) => this.setState({ scheme: e.currentTarget.dataset.id });
@@ -286,7 +329,7 @@ class Component extends DCLogic {
       this.setState({ claudeKey: v, apiKeyStatus: v.trim() ? '✓ Key saved on this device — AI features are on.' : '' });
     };
     this.aiPrice = async () => {
-      if (!(this.state.claudeKey || '').trim()) { this.setState({ priceStatus: 'Add your Claude API key above first.' }); return; }
+      if (!this._aiReady()) { this.setState({ priceStatus: 'Add your Claude API key above first.' }); return; }
       const comps = (this.state.comps || []).filter((c) => (c.address || '').trim() || (c.sold || '').trim());
       if (!comps.length) { this.setState({ priceStatus: 'Add or import some comps first.' }); return; }
       this.setState({ priceStatus: 'Asking Claude for a price range …' });
@@ -303,7 +346,7 @@ class Component extends DCLogic {
       }
     };
     this.aiBio = async () => {
-      if (!(this.state.claudeKey || '').trim()) { this.setState({ bioStatus: 'Add your Claude API key above first.' }); return; }
+      if (!this._aiReady()) { this.setState({ bioStatus: 'Add your Claude API key above first.' }); return; }
       this.setState({ bioStatus: 'Writing a bio with Claude …' });
       try {
         const existing = (this.state.agentBio || '').trim();
@@ -318,6 +361,43 @@ class Component extends DCLogic {
       } catch (err) {
         this.setState({ bioStatus: 'Could not write a bio (' + (err.message || 'error') + ').' });
       }
+    };
+    this.onPresName = (e) => this.setState({ presName: e.target.value });
+    this.savePres = () => {
+      const r = this._saveToLibrary();
+      this.setState({ savedList: r.list, currentId: r.id, presName: r.name, libStatus: '✓ Saved “' + r.name + '”.' });
+    };
+    this.newPres = () => {
+      this.setState(Object.assign(this._blankForm(), { libStatus: 'Started a new presentation.' }));
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) {}
+    };
+    this.openPres = (e) => {
+      const id = e.currentTarget.dataset.id;
+      const entry = this._loadList().find(function (p) { return p.id === id; });
+      if (!entry) return;
+      this.setState(Object.assign(this._blankForm(), entry.data, { currentId: entry.id, presName: entry.name, libStatus: 'Opened “' + entry.name + '”.' }));
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) {}
+    };
+    this.dupPres = (e) => {
+      const id = e.currentTarget.dataset.id;
+      const list = this._loadList();
+      const src = list.find(function (p) { return p.id === id; });
+      if (!src) return;
+      list.unshift({ id: this._newId(), name: src.name + ' (copy)', type: src.type, updatedAt: Date.now(), data: Object.assign({}, src.data) });
+      this._writeList(list);
+      this.setState({ savedList: list, libStatus: 'Duplicated “' + src.name + '”.' });
+    };
+    this.delPres = (e) => {
+      const id = e.currentTarget.dataset.id;
+      const list = this._loadList();
+      const victim = list.find(function (p) { return p.id === id; });
+      if (!victim) return;
+      if (typeof confirm === 'function' && !confirm('Delete “' + victim.name + '”? This cannot be undone.')) return;
+      const next = list.filter(function (p) { return p.id !== id; });
+      this._writeList(next);
+      const patch = { savedList: next, libStatus: 'Deleted “' + victim.name + '”.' };
+      if (this.state.currentId === id) patch.currentId = '';
+      this.setState(patch);
     };
     this.onComp = (e) => {
       const i = +e.target.dataset.i, k = e.target.dataset.k, v = e.target.value;
@@ -338,7 +418,7 @@ class Component extends DCLogic {
         mod.PDFParse.setWorker('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf.worker.min.mjs');
         const parser = new mod.PDFParse({ data: new Uint8Array(await file.arrayBuffer()) });
         const text = (await parser.getText()).text || '';
-        const useAI = !!(this.state.claudeKey || '').trim();
+        const useAI = this._aiReady();
         if (useAI) {
           this.setState({ cmaStatus: 'Extracting comps with Claude — this can take a few seconds …' });
           try {
@@ -420,10 +500,11 @@ class Component extends DCLogic {
       } catch (err) { this.setState({ agentInfoStatus: 'Could not read that file.' }); }
     };
     this.open = () => {
+      try { this._saveToLibrary(); } catch (e) {} // auto-save so opening a deck never loses work
       try {
-        const save = Object.assign({}, this.state);
-        delete save.claudeKey; delete save.apiKeyStatus; // key stays in this browser session only
-        localStorage.setItem('blyPresentation', JSON.stringify(save));
+        const payload = Object.assign({}, this.state);
+        ['claudeKey', 'apiKeyStatus', 'priceStatus', 'bioStatus', 'narrativeStatus', 'cmaStatus', 'realistStatus', 'headshotStatus', 'agentInfoStatus', 'libStatus', 'savedList'].forEach(function (k) { delete payload[k]; });
+        localStorage.setItem('blyPresentation', JSON.stringify(payload));
       } catch (e) {}
       const paths = {
         buyer: '../buyer-presentation/BuyerPresentation.dc.html',
@@ -488,25 +569,70 @@ class Component extends DCLogic {
     }
     return out;
   }
+  _aiReady() {
+    return !!(AI_PROXY_URL && AI_PROXY_URL.trim()) || !!(this.state.claudeKey || '').trim();
+  }
+  _newId() { return 'p' + Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36); }
+  _loadList() { try { return JSON.parse(localStorage.getItem('blyPresentations') || '[]'); } catch (e) { return []; } }
+  _writeList(list) { try { localStorage.setItem('blyPresentations', JSON.stringify(list)); } catch (e) {} }
+  _autoName() {
+    const s = this.state;
+    const labels = { buyer: 'Buyer', prelisting: 'Pre-Listing', listing: 'Listing', relisting: 'Re-Listing' };
+    return (s.presName || '').trim() || (s.clientName || '').trim() || (s.propertyAddress || '').trim() || ((labels[s.type] || 'Untitled') + ' presentation');
+  }
+  _blankForm() {
+    return {
+      type: 'listing', scheme: 'navy', clientName: '', agentName: 'Deborah Bly',
+      agentPhone: '(832) 932-5435', agentEmail: 'clientcare@agentbly.com', agentBio: '', agentPhoto: '',
+      headshotStatus: '', agentInfoStatus: '', presentedDate: 'June 2026',
+      propertyAddress: '', recommendedLow: '$435,000', recommendedHigh: '$449,000',
+      comps: [], skipComps: false, cmaStatus: '', realistStatus: '',
+      marketNarrative: '', narrativeStatus: '', priceStatus: '', bioStatus: '',
+      presName: '', currentId: ''
+    };
+  }
+  _saveToLibrary() {
+    const list = this._loadList();
+    const data = Object.assign({}, this.state);
+    ['claudeKey', 'apiKeyStatus', 'priceStatus', 'bioStatus', 'narrativeStatus', 'cmaStatus', 'realistStatus', 'headshotStatus', 'agentInfoStatus', 'libStatus', 'savedList'].forEach(function (k) { delete data[k]; });
+    const name = this._autoName();
+    const now = Date.now();
+    let id = this.state.currentId;
+    if (id) {
+      const i = list.findIndex(function (p) { return p.id === id; });
+      const entry = { id: id, name: name, type: this.state.type, updatedAt: now, data: data };
+      if (i !== -1) list[i] = entry; else list.unshift(entry);
+    } else {
+      id = this._newId();
+      list.unshift({ id: id, name: name, type: this.state.type, updatedAt: now, data: data });
+    }
+    this._writeList(list);
+    return { id: id, name: name, list: list };
+  }
   async _claude(prompt, schema, maxTokens) {
-    const key = (this.state.claudeKey || '').trim();
-    if (!key) throw new Error('no API key');
     const body = {
       model: 'claude-opus-4-8',
       max_tokens: maxTokens || 1024,
       messages: [{ role: 'user', content: prompt }]
     };
     if (schema) body.output_config = { format: { type: 'json_schema', schema: schema } };
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
+    const proxy = (AI_PROXY_URL && AI_PROXY_URL.trim()) ? AI_PROXY_URL.trim() : '';
+    let url, headers;
+    if (proxy) {
+      url = proxy;
+      headers = { 'content-type': 'application/json' };
+    } else {
+      const key = (this.state.claudeKey || '').trim();
+      if (!key) throw new Error('no API key');
+      url = 'https://api.anthropic.com/v1/messages';
+      headers = {
         'content-type': 'application/json',
         'x-api-key': key,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify(body)
-    });
+      };
+    }
+    const res = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(body) });
     if (!res.ok) {
       let msg = '';
       try { const e = await res.json(); msg = (e.error && e.error.message) || ''; } catch (_) {}
@@ -523,7 +649,7 @@ class Component extends DCLogic {
     }
   }
   async _aiExtractComps(text) {
-    if (!(this.state.claudeKey || '').trim()) return null;
+    if (!this._aiReady()) return null;
     const schema = {
       type: 'object',
       properties: {
@@ -584,11 +710,21 @@ class Component extends DCLogic {
       typeName: tn ? tn.name : '',
       comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
       claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus, priceStatus: this.state.priceStatus, bioStatus: this.state.bioStatus,
+      showKeyField: !(AI_PROXY_URL && AI_PROXY_URL.trim()),
+      presName: this.state.presName, libStatus: this.state.libStatus,
+      hasSaved: this.state.savedList.length > 0, noSaved: this.state.savedList.length === 0,
+      savedList: this.state.savedList.map(function (p) {
+        const labels = { buyer: 'Buyer', prelisting: 'Pre-Listing', listing: 'Listing', relisting: 'Re-Listing' };
+        let when = '';
+        try { when = new Date(p.updatedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) {}
+        return { id: p.id, name: p.name, meta: (labels[p.type] || 'Presentation') + (when ? ' · updated ' + when : '') };
+      }),
       clientName: this.state.clientName, agentName: this.state.agentName,
       agentPhone: this.state.agentPhone, agentEmail: this.state.agentEmail, agentBio: this.state.agentBio, agentPhoto: this.state.agentPhoto, hasPhoto: !!this.state.agentPhoto, headshotStatus: this.state.headshotStatus, agentInfoStatus: this.state.agentInfoStatus,
       presentedDate: this.state.presentedDate, propertyAddress: this.state.propertyAddress,
       recommendedLow: this.state.recommendedLow, recommendedHigh: this.state.recommendedHigh,
       onType: this.onType, onScheme: this.onScheme, onField: this.onField, onKey: this.onKey, aiPrice: this.aiPrice, aiBio: this.aiBio,
+      onPresName: this.onPresName, savePres: this.savePres, newPres: this.newPres, openPres: this.openPres, dupPres: this.dupPres, delPres: this.delPres,
       onCMA: this.onCMA, onRealist: this.onRealist, onHeadshot: this.onHeadshot, onAgentInfo: this.onAgentInfo, toggleSkip: this.toggleSkip, onComp: this.onComp, addComp: this.addComp, removeComp: this.removeComp, open: this.open
     };
   }
