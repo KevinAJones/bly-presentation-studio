@@ -13,7 +13,13 @@
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; }
-  input::placeholder{ color:#9fb0c4; }
+  input::placeholder, textarea::placeholder{ color:#9fb0c4; }
+  button[disabled]{ opacity:.55; cursor:progress !important; }
+  /* Tablet/phone: collapse the multi-column grids and tighten card padding */
+  @media (max-width: 760px){
+    [style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
+    section[style]{ padding-left:20px !important; padding-right:20px !important; }
+  }
 </style>
 </helmet>
 
@@ -195,7 +201,7 @@
       <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
         <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:7px;">
           <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);">Agent bio <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, shows on “Meet the team”</span></label>
-          <button type="button" onClick="{{ aiBio }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
+          <button type="button" onClick="{{ aiBio }}" disabled="{{ aiBusy }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
         </div>
         <textarea data-k="agentBio" value="{{ agentBio }}" onInput="{{ onField }}" rows="3" placeholder="A short bio in your voice — experience, local roots, how you serve clients." style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; line-height:1.5; color:var(--ink); background:#fff; outline:none; resize:vertical; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);"></textarea>
         <sc-if value="{{ bioStatus }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--royal); font-weight:600; margin-top:8px;">{{ bioStatus }}</div></sc-if>
@@ -205,7 +211,7 @@
       <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
         <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:7px;">
           <label style="font-weight:600; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);">Market narrative <span style="text-transform:none; letter-spacing:0; color:var(--ink-faint); font-weight:500;">— optional, adds a market-summary slide</span></label>
-          <button type="button" onClick="{{ aiNarrative }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
+          <button type="button" onClick="{{ aiNarrative }}" disabled="{{ aiBusy }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:7px 14px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Write with AI</button>
         </div>
         <textarea data-k="marketNarrative" value="{{ marketNarrative }}" onInput="{{ onField }}" rows="3" placeholder="A short take on the local market — what it means for pricing and timing." style="width:100%; padding:13px 15px; border:1.5px solid var(--field-line); border-radius:10px; font-size:16px; line-height:1.5; color:var(--ink); background:#fff; outline:none; resize:vertical; font-family:var(--f-body);" style-focus="border-color:var(--royal); box-shadow:0 0 0 3px color-mix(in srgb, var(--royal) 16%, transparent);"></textarea>
         <sc-if value="{{ narrativeStatus }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--royal); font-weight:600; margin-top:8px;">{{ narrativeStatus }}</div></sc-if>
@@ -228,7 +234,7 @@
           </div>
         </div>
         <div style="margin-top:14px; display:flex; align-items:center; gap:13px; flex-wrap:wrap;">
-          <button type="button" onClick="{{ aiPrice }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:9px 16px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Suggest range with AI</button>
+          <button type="button" onClick="{{ aiPrice }}" disabled="{{ aiBusy }}" style="cursor:pointer; font-family:var(--f-body); font-weight:700; font-size:13px; color:var(--royal); background:var(--bg, #eef3f9); border:1.5px solid var(--field-line); padding:9px 16px; border-radius:9px; white-space:nowrap;" style-hover="border-color:var(--royal);">✨ Suggest range with AI</button>
           <sc-if value="{{ priceStatus }}" hint-placeholder-val=""><span style="font-size:13px; color:var(--royal); font-weight:600; line-height:1.5;">{{ priceStatus }}</span></sc-if>
         </div>
       </sc-if>
@@ -324,6 +330,7 @@ class Component extends DCLogic {
       apiKeyStatus: '',
       priceStatus: '',
       bioStatus: '',
+      aiBusy: false,
       marketNarrative: saved.marketNarrative || '',
       narrativeStatus: '',
       presName: saved.presName || '',
@@ -343,7 +350,7 @@ class Component extends DCLogic {
       if (!this._aiReady()) { this.setState({ priceStatus: 'Add your Claude API key above first.' }); return; }
       const comps = (this.state.comps || []).filter((c) => (c.address || '').trim() || (c.sold || '').trim());
       if (!comps.length) { this.setState({ priceStatus: 'Add or import some comps first.' }); return; }
-      this.setState({ priceStatus: 'Asking Claude for a price range …' });
+      this.setState({ priceStatus: 'Asking Claude for a price range …', aiBusy: true });
       try {
         const schema = { type: 'object', properties: { low: { type: 'string' }, high: { type: 'string' }, rationale: { type: 'string' } }, required: ['low', 'high', 'rationale'], additionalProperties: false };
         const prompt = 'You are a listing agent pricing a home. Subject property: ' + (this.state.propertyAddress || '(address not provided)') + '. ' +
@@ -354,11 +361,11 @@ class Component extends DCLogic {
         this.setState({ recommendedLow: r.low || this.state.recommendedLow, recommendedHigh: r.high || this.state.recommendedHigh, priceStatus: '✓ ' + (r.rationale || 'Range suggested — edit the fields if you like.') });
       } catch (err) {
         this.setState({ priceStatus: 'Could not get a suggestion (' + (err.message || 'error') + ').' });
-      }
+      } finally { this.setState({ aiBusy: false }); }
     };
     this.aiBio = async () => {
       if (!this._aiReady()) { this.setState({ bioStatus: 'Add your Claude API key above first.' }); return; }
-      this.setState({ bioStatus: 'Writing a bio with Claude …' });
+      this.setState({ bioStatus: 'Writing a bio with Claude …', aiBusy: true });
       try {
         const existing = (this.state.agentBio || '').trim();
         const prompt = 'Write a warm, professional real-estate agent bio for a client presentation, in The Bly Team brand voice ' +
@@ -371,11 +378,11 @@ class Component extends DCLogic {
         else this.setState({ bioStatus: 'No text came back — try again.' });
       } catch (err) {
         this.setState({ bioStatus: 'Could not write a bio (' + (err.message || 'error') + ').' });
-      }
+      } finally { this.setState({ aiBusy: false }); }
     };
     this.aiNarrative = async () => {
       if (!this._aiReady()) { this.setState({ narrativeStatus: 'Add your Claude API key above first.' }); return; }
-      this.setState({ narrativeStatus: 'Writing a market summary with Claude …' });
+      this.setState({ narrativeStatus: 'Writing a market summary with Claude …', aiBusy: true });
       try {
         const comps = (this.state.comps || []).filter((c) => (c.address || '').trim() || (c.sold || '').trim());
         const prompt = 'Write a short market-summary paragraph for a real-estate listing presentation, in The Bly Team brand voice ' +
@@ -388,7 +395,7 @@ class Component extends DCLogic {
         else this.setState({ narrativeStatus: 'No text came back — try again.' });
       } catch (err) {
         this.setState({ narrativeStatus: 'Could not write a summary (' + (err.message || 'error') + ').' });
-      }
+      } finally { this.setState({ aiBusy: false }); }
     };
     this.onPresName = (e) => this.setState({ presName: e.target.value });
     this.savePres = () => {
@@ -448,7 +455,7 @@ class Component extends DCLogic {
         const text = (await parser.getText()).text || '';
         const useAI = this._aiReady();
         if (useAI) {
-          this.setState({ cmaStatus: 'Extracting comps with Claude — this can take a few seconds …' });
+          this.setState({ cmaStatus: 'Extracting comps with Claude — this can take a few seconds …', aiBusy: true });
           try {
             const ai = await this._aiExtractComps(text);
             if (ai && ai.length) {
@@ -468,7 +475,7 @@ class Component extends DCLogic {
         }
       } catch (err) {
         this.setState({ cmaStatus: 'Could not read that file. Enter comps below, or present comps live.' });
-      }
+      } finally { this.setState({ aiBusy: false }); }
     };
     this.onRealist = async (e) => {
       const file = e.target.files && e.target.files[0];
@@ -738,7 +745,7 @@ class Component extends DCLogic {
       typeName: tn ? tn.name : '',
       comps: this.state.comps, skipComps: this.state.skipComps, cmaStatus: this.state.cmaStatus, realistStatus: this.state.realistStatus, showTable: !this.state.skipComps,
       claudeKey: this.state.claudeKey, apiKeyStatus: this.state.apiKeyStatus, priceStatus: this.state.priceStatus, bioStatus: this.state.bioStatus,
-      showKeyField: !(AI_PROXY_URL && AI_PROXY_URL.trim()),
+      showKeyField: !(AI_PROXY_URL && AI_PROXY_URL.trim()), aiBusy: this.state.aiBusy,
       marketNarrative: this.state.marketNarrative, narrativeStatus: this.state.narrativeStatus, showNarrative: T !== 'buyer',
       presName: this.state.presName, libStatus: this.state.libStatus,
       hasSaved: this.state.savedList.length > 0, noSaved: this.state.savedList.length === 0,
